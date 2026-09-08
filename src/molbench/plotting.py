@@ -66,8 +66,8 @@ def plot_performance(summary: pd.DataFrame, split: str, out: Path, models=C.TIER
         hi = sub.loc[ms, "ci95_high"].values
         ax.barh(y, means, color=[MODEL_COLORS[m] for m in ms], height=0.62, edgecolor="white", linewidth=1)
         ax.errorbar(means, y, xerr=[means - lo, hi - means], fmt="none", ecolor=TEXT, elinewidth=1, capsize=2)
-        for yi, v in zip(y, means):
-            ax.text(v, yi, f" {v:.3f}", va="center", ha="left", fontsize=7.5, color=TEXT)
+        for yi, v, h in zip(y, means, hi):
+            ax.text(h, yi, f" {v:.3f}", va="center", ha="left", fontsize=7.5, color=TEXT)
         ax.set_yticks(y)
         ax.set_yticklabels([C.MODEL_LABELS[m] for m in ms], fontsize=7.5)
         ax.invert_yaxis()
@@ -75,9 +75,9 @@ def plot_performance(summary: pd.DataFrame, split: str, out: Path, models=C.TIER
         ax.set_title(f"{TASK_LABELS[task]}  ({METRIC_LABELS[metric]}{' ↓' if not C.HIGHER_IS_BETTER[metric] else ' ↑'})")
         ax.grid(axis="y", visible=False)
         if metric == "roc_auc":
-            ax.set_xlim(max(0.4, (lo.min() - 0.05)), min(1.0, hi.max() + 0.06))
+            ax.set_xlim(max(0.3, (lo.min() - 0.05)), min(1.0, hi.max() + 0.08))
         else:
-            ax.set_xlim(0, hi.max() * 1.18)
+            ax.set_xlim(0, hi.max() * 1.22)
     for ax in axes[len(tasks):]:
         ax.axis("off")
     fig.suptitle(f"{split.capitalize()} split: primary metric, mean and 95% CI over 5 seeds × 5 folds", fontsize=11,
@@ -114,14 +114,15 @@ def plot_ablations(abl: pd.DataFrame, out: Path):
         ax.set_yticklabels([TASK_LABELS[t] for t in tasks])
         ax.invert_yaxis()
         ax.set_title(f"{split.capitalize()} split")
-        ax.set_xlabel("Contribution to primary metric (MAT − ablation; + = term helps; ROC-AUC units or −RMSE)")
+        ax.set_xlabel("Contribution (MAT − ablation)")
         ax.grid(axis="y", visible=False)
-    handles = [plt.Line2D([], [], color=COMPONENT_COLORS[c], marker="o", linewidth=2, label=c) for c in comps]
-    handles.append(plt.Line2D([], [], color=TEXT2, marker="o", markerfacecolor="white", linewidth=0, label="hollow = not significant (Wilcoxon p ≥ 0.05)"))
-    axes[0].legend(handles=handles, loc="lower left", fontsize=8)
-    fig.suptitle("Ablation study: what each MAT term contributes (95% CI over 25 paired folds)", fontsize=11,
+    handles = [plt.Line2D([], [], color=COMPONENT_COLORS[c], marker="o", linewidth=2, label=f"term removed: {c}") for c in comps]
+    handles.append(plt.Line2D([], [], color=TEXT2, marker="o", markerfacecolor="white", linewidth=0, label="hollow marker = not significant (Wilcoxon p ≥ 0.05)"))
+    fig.legend(handles=handles, loc="lower center", ncol=4, fontsize=8, bbox_to_anchor=(0.5, -0.02))
+    fig.suptitle("Ablation study: what each MAT term contributes (95% CI over 25 paired folds); "
+                 "positive = removing the term hurts (ROC-AUC units, or −RMSE for regression)", fontsize=10.5,
                  fontweight="bold", x=0.01, ha="left")
-    fig.tight_layout()
+    fig.tight_layout(rect=(0, 0.05, 1, 1))
     return _save(fig, out)
 
 
@@ -159,36 +160,43 @@ def plot_generalization_gap(gap: pd.DataFrame, out: Path, models=C.TIER1_MODELS)
 def plot_pretrained_vs_scratch(summary2: pd.DataFrame, comp: pd.DataFrame, out: Path):
     prim = _primary_rows(summary2)
     tasks = [t for t in C.TASK_NAMES if t in set(prim["task"])]
-    fig, axes = plt.subplots(1, 2, figsize=(12, 4.6), sharey=False)
+    n_runs = int(prim["n"].max()) if "n" in prim else 0
+    fig, axes = plt.subplots(1, 2, figsize=(12, 4.8), sharey=False)
     for ax, split in zip(axes, C.SPLITS):
         x = np.arange(len(tasks))
+        tops = np.zeros(len(tasks))
         for j, m in enumerate(["mat_large_scratch", "mat_large_pretrained"]):
             s = prim[(prim["split"] == split) & (prim["model"] == m)].set_index("task")
             means = np.array([s.loc[t, "mean"] if t in s.index else np.nan for t in tasks])
             lo = np.array([s.loc[t, "ci95_low"] if t in s.index else np.nan for t in tasks])
             hi = np.array([s.loc[t, "ci95_high"] if t in s.index else np.nan for t in tasks])
+            has_ci = ~np.isnan(hi)
             ax.bar(x + (j - 0.5) * 0.36, means, width=0.34, color=MODEL_COLORS[m], label=C.MODEL_LABELS[m],
                    edgecolor="white", linewidth=1)
-            ax.errorbar(x + (j - 0.5) * 0.36, means, yerr=[means - lo, hi - means], fmt="none", ecolor=TEXT,
-                        elinewidth=1, capsize=2)
-            for xi, v in zip(x + (j - 0.5) * 0.36, means):
+            if has_ci.any():
+                ax.errorbar(x[has_ci] + (j - 0.5) * 0.36, means[has_ci], yerr=[means[has_ci] - lo[has_ci], hi[has_ci] - means[has_ci]],
+                            fmt="none", ecolor=TEXT, elinewidth=1, capsize=2)
+            for k, (xi, v) in enumerate(zip(x + (j - 0.5) * 0.36, means)):
                 if not np.isnan(v):
-                    ax.text(xi, v, f"{v:.2f}", ha="center", va="bottom", fontsize=6.5, color=TEXT)
+                    top = hi[k] if not np.isnan(hi[k]) else v
+                    ax.text(xi, top, f"{v:.2f}", ha="center", va="bottom", fontsize=6.5, color=TEXT)
+                    tops[k] = max(tops[k], top)
         for i, t in enumerate(tasks):
             r = comp[(comp["split"] == split) & (comp["task"] == t)]
             r = r[r.apply(lambda q: q["metric"] == C.PRIMARY_METRIC[q["task_type"]], axis=1)]
-            if not r.empty:
-                p = r.iloc[0]["wilcoxon_p"]
-                ax.text(i, ax.get_ylim()[1] * 0.98, f"p={p:.3f}" if not np.isnan(p) else "", ha="center", va="top",
-                        fontsize=7, color=TEXT2)
+            if not r.empty and not np.isnan(r.iloc[0]["wilcoxon_p"]):
+                ax.text(i, tops[i] * 1.06, f"p={r.iloc[0]['wilcoxon_p']:.3f}", ha="center", va="bottom", fontsize=7, color=TEXT2)
+        ax.set_ylim(0, max(tops.max() * 1.18, 0.1))
         ax.set_xticks(x)
         ax.set_xticklabels([f"{TASK_LABELS[t]}\n({METRIC_LABELS[C.PRIMARY_METRIC[C.TASKS[t]['type']]]})" for t in tasks], fontsize=7.5)
         ax.set_title(f"{split.capitalize()} split")
         ax.grid(axis="x", visible=False)
-    axes[0].legend(loc="upper left", fontsize=8)
-    fig.suptitle("Pretrained MAT vs scratch MAT at the released architecture (42M parameters), 5 seeds, fold 0; Wilcoxon p",
+    handles, labels = axes[0].get_legend_handles_labels()
+    fig.legend(handles, labels, loc="lower center", ncol=2, fontsize=8, bbox_to_anchor=(0.5, -0.02))
+    fig.suptitle(f"Pretrained MAT vs scratch MAT at the released architecture (42M parameters): fold 0 of "
+                 f"{n_runs} seed{'s' if n_runs != 1 else ''}; Wilcoxon p shown when n ≥ 2",
                  fontsize=11, fontweight="bold", x=0.01, ha="left")
-    fig.tight_layout()
+    fig.tight_layout(rect=(0, 0.05, 1, 1))
     return _save(fig, out)
 
 

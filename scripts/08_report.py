@@ -130,9 +130,16 @@ def main():
              "- Statistics: mean ± 95 % CI (t-distribution over 25 fold scores), paired t-test and Wilcoxon signed-rank test "
              "against MAT on the 25 paired folds, Holm correction within each (task, split, metric) family, and a "
              "seed-level robustness check (5 seed means). Significance threshold p < 0.05.\n")
-    L.append("Frozen configurations (selected on seed 42 / fold 0 validation):\n")
-    rows = [[r["family"], TASK_LABELS[r["task"]], r["split"], r["config"]] for _, r in best.iterrows()]
-    L.append(md_table(["Family", "Task", "Split", "Configuration"], rows) + "\n")
+    L.append("Frozen configurations (selected on seed 42 / fold 0 validation; ablations and the hybrid use the MAT row):\n")
+    rows = []
+    for fam in ["rf", "svm", "gcn", "mat"]:
+        for t in tasks:
+            sub = best[(best["family"] == fam) & (best["task"] == t)].set_index("split")
+            if sub.empty:
+                continue
+            rows.append([fam, TASK_LABELS[t], sub.loc["random", "config"] if "random" in sub.index else "–",
+                         sub.loc["scaffold", "config"] if "scaffold" in sub.index else "–"])
+    L.append(md_table(["Family", "Task", "Random split", "Scaffold split"], rows) + "\n")
 
     # ------------------------------------------------------------------ 3. main results
     L.append("## 3. Main results (Tier 1)\n")
@@ -149,12 +156,13 @@ def main():
                     cells.append("–")
                     continue
                 r = r.iloc[0]
-                cells.append(f"{num(f'{split}_{m}_{t}_{primary(t)}_mean', r['mean'])} ± {(r['ci95_high'] - r['ci95_low']) / 2:.3f}")
+                key = split + "_" + m + "_" + t + "_" + primary(t) + "_mean"
+                cells.append(f"{num(key, r['mean'])} ± {(r['ci95_high'] - r['ci95_low']) / 2:.3f}")
             rows.append(cells)
         L.append(md_table(header, rows) + "\n")
         rk = ranks[ranks["split"] == split].sort_values("avg_rank")
         L.append("Average rank across the 7 tasks (1 = best): " + ", ".join(
-            f"{LBL[r['model']]} {num(f'rank_{split}_{r['model']}', r['avg_rank'], 2)}" for _, r in rk.iterrows()) + ".\n")
+            f"{LBL[r['model']]} {num('rank_' + split + '_' + r['model'], r['avg_rank'], 2)}" for _, r in rk.iterrows()) + ".\n")
     L.append("![]( ../results/figures/fig_average_ranks.png)\n")
     L.append("Regression metrics converted to original units (RMSE and MAE scale linearly with the recovered factor):\n")
     rows = []
@@ -218,7 +226,7 @@ def main():
                 r = r.iloc[0]
                 helps = (r["contribution"] > 0) if C.HIGHER_IS_BETTER[primary(t)] else (r["contribution"] < 0)
                 rows.append([split, TASK_LABELS[t], comp, METRIC_LABELS[primary(t)],
-                             num(f"abl_{split}_{t}_{comp.replace(' ', '_')}", r["contribution"]),
+                             num("abl_" + split + "_" + t + "_" + comp.replace(" ", "_"), r["contribution"]),
                              f"[{r['contribution_ci95_low']:.3f}, {r['contribution_ci95_high']:.3f}]", pval(r["t_p"]),
                              pval(r["wilcoxon_p"]) + stars(r["wilcoxon_p"]),
                              pval(rs.iloc[0]["wilcoxon_p"]) if not rs.empty else "n/a",
@@ -231,8 +239,9 @@ def main():
             sub = sub[sub.apply(lambda q: q["metric"] == primary(q["task"]), axis=1)]
             helps = sub.apply(lambda q: (q["contribution"] > 0) if C.HIGHER_IS_BETTER[q["metric"]] else (q["contribution"] < 0), axis=1)
             sig = sub["wilcoxon_p"] < 0.05
-            NUMBERS[f"abl_sig_helps_{split}_{comp.replace(' ', '_')}"] = int((helps & sig).sum())
-            NUMBERS[f"abl_sig_hurts_{split}_{comp.replace(' ', '_')}"] = int((~helps & sig).sum())
+            ckey = comp.replace(" ", "_")
+            NUMBERS["abl_sig_helps_" + split + "_" + ckey] = int((helps & sig).sum())
+            NUMBERS["abl_sig_hurts_" + split + "_" + ckey] = int((~helps & sig).sum())
             L.append(f"- {comp} ({split}): helps significantly on {int((helps & sig).sum())}/{len(sub)} tasks, "
                      f"hurts significantly on {int((~helps & sig).sum())}/{len(sub)} tasks, point estimate helps on {int(helps.sum())}/{len(sub)}.")
     L.append("")
@@ -253,14 +262,14 @@ def main():
                 cells.append("–")
                 continue
             r = r.iloc[0]
-            cells.append(f"{num(f'gap_{m}_{t}', r['gap'], 3)} [{r['gap_ci95_low']:.3f}, {r['gap_ci95_high']:.3f}]")
+            cells.append(f"{num('gap_' + m + '_' + t, r['gap'], 3)} [{r['gap_ci95_low']:.3f}, {r['gap_ci95_high']:.3f}]")
         rows.append(cells)
     L.append(md_table(header, rows) + "\n")
     g_prim = gap[gap.apply(lambda q: q["metric"] == primary(q["task"]), axis=1)].copy()
     g_prim["gap_signed"] = g_prim.apply(lambda q: q["gap"] if C.HIGHER_IS_BETTER[q["metric"]] else -q["gap"], axis=1)
     clf_gap = g_prim[g_prim["task_type"] == "clf"].groupby("model")["gap_signed"].mean()
     L.append("Mean ROC-AUC drop from random to scaffold split over the five classification tasks: " + ", ".join(
-        f"{LBL[m]} {num(f'meangap_clf_{m}', clf_gap[m], 3)}" for m in models if m in clf_gap) + ".\n")
+        f"{LBL[m]} {num('meangap_clf_' + m, clf_gap[m], 3)}" for m in models if m in clf_gap) + ".\n")
 
     # ------------------------------------------------------------------ 7. pretrained vs scratch
     if tier2:
@@ -287,7 +296,8 @@ def main():
                              f"{small.iloc[0]['mean']:.3f}" if not small.empty else "–",
                              num(f"t2_{split}_{t}_diff", c["mean_diff"]), pval(c["t_p"]), pval(c["wilcoxon_p"]) + stars(c["wilcoxon_p"]),
                              "pretrained" if not c["reference_better"] else "scratch"])
-        L.append(md_table(["Split", "Task", "Metric", "Pretrained (n=5)", "Scratch-large (n=5)", "Small MAT (25 folds)",
+        n2s = int(summ2["n"].max())
+        L.append(md_table(["Split", "Task", "Metric", f"Pretrained (n={n2s})", f"Scratch-large (n={n2s})", "Small MAT (25 folds)",
                            "Δ (pre − scratch)", "t p", "W p", "Better"], rows) + "\n")
         for split in C.SPLITS:
             sub = pvs[pvs["split"] == split]
@@ -296,7 +306,9 @@ def main():
             sig = int(((~sub["reference_better"]) & (sub["wilcoxon_p"] < 0.05)).sum())
             NUMBERS[f"t2_pre_wins_{split}"] = wins
             NUMBERS[f"t2_pre_sig_{split}"] = sig
-            L.append(f"- {split}: pretraining improves the point estimate on {wins}/{len(sub)} tasks, significantly on {sig}/{len(sub)} (Wilcoxon, n = 5).")
+            L.append(f"- {split}: pretraining improves the point estimate on {wins}/{len(sub)} tasks"
+                     + (f", significantly on {sig}/{len(sub)} (Wilcoxon, n = {n2s})." if n2s >= 2 else
+                        f" (single seed locally; significance requires the 5-seed GPU protocol in notebooks/colab_tier2.ipynb)."))
         L.append("\nLarge models versus the small scratch MAT of Tier 1 on the same fold-0 partitions (paired over 5 seeds):\n")
         rows = []
         for _, r in lvs[lvs.apply(lambda q: q["metric"] == primary(q["task"]), axis=1)].iterrows():
@@ -367,13 +379,13 @@ def main():
     for comp in ["graph structure", "3D distances", "self-attention"]:
         for split in C.SPLITS:
             L.append(f"- Removing **{comp}** ({split} split) hurts significantly on "
-                     f"{NUMBERS[f'abl_sig_helps_{split}_{comp.replace(' ', '_')}']}/7 tasks and helps significantly on "
-                     f"{NUMBERS[f'abl_sig_hurts_{split}_{comp.replace(' ', '_')}']}/7 tasks.")
+                     f"{NUMBERS['abl_sig_helps_' + split + '_' + comp.replace(' ', '_')]}/7 tasks and helps significantly on "
+                     f"{NUMBERS['abl_sig_hurts_' + split + '_' + comp.replace(' ', '_')]}/7 tasks.")
     for split in C.SPLITS:
         for m in ["rf", "svm", "gcn", "hybrid"]:
             if m in models:
-                L.append(f"- {LBL[m]} vs MAT ({split}): MAT significantly better on {NUMBERS[f'sigcount_{split}_{m}_matwins']}/7, "
-                         f"{LBL[m]} significantly better on {NUMBERS[f'sigcount_{split}_{m}_modelwins']}/7.")
+                L.append(f"- {LBL[m]} vs MAT ({split}): MAT significantly better on {NUMBERS['sigcount_' + split + '_' + m + '_matwins']}/7, "
+                         f"{LBL[m]} significantly better on {NUMBERS['sigcount_' + split + '_' + m + '_modelwins']}/7.")
     L.append("")
     L.append("## 11. Limitations\n")
     L.append("- CPU-only execution: the small MAT configurations (d_model 64–128, 2–4 layers) are far smaller than the "
