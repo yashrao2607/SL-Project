@@ -20,6 +20,8 @@ def main():
     ap.add_argument("--folds", nargs="+", type=int, default=[0])
     ap.add_argument("--tasks", nargs="+", default=C.TASK_NAMES)
     ap.add_argument("--models", nargs="+", default=C.TIER2_MODELS)
+    ap.add_argument("--splits", nargs="+", default=C.SPLITS)
+    ap.add_argument("--out", default=None, help="output CSV (default results/raw/tier2_runs.csv)")
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--threads", type=int, default=4)
     ap.add_argument("--max-epochs", type=int, default=TIER2_CONFIG["max_epochs"])
@@ -31,13 +33,13 @@ def main():
     cfg = {k: v for k, v in TIER2_CONFIG.items() if k not in ("max_epochs", "patience")}
     jobs = []
     for task in args.tasks:
-        for split in C.SPLITS:
+        for split in args.splits:
             for seed in args.seeds:
                 for fold in args.folds:
                     for model in args.models:
                         jobs.append({"model": model, "task": task, "split": split, "seed": seed, "fold": fold,
                                      "config": cfg, "max_epochs": args.max_epochs, "patience": args.patience})
-    run_grid(jobs, C.RESULTS_RAW / "tier2_runs.csv", workers=args.workers, threads=args.threads)
+    run_grid(jobs, args.out or (C.RESULTS_RAW / "tier2_runs.csv"), workers=args.workers, threads=args.threads)
 
 
 if __name__ == "__main__":
