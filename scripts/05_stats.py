@@ -53,6 +53,9 @@ def main():
         original_units(summ).to_csv(C.RESULTS_SUMMARY / "regression_original_units.csv", index=False)
         # Hybrid vs MAT, GCN vs MAT etc. are already in vs_mat; also RF as reference for the classical view.
         S.compare_to_reference(runs, reference="rf").to_csv(C.RESULTS_STATS / "vs_rf_tier1.csv", index=False)
+        by_seed = S.aggregate_by_seed(runs)
+        S.compare_to_reference(by_seed, reference="mat").to_csv(C.RESULTS_STATS / "vs_mat_tier1_seedlevel.csv", index=False)
+        S.ablation_contributions(by_seed).to_csv(C.RESULTS_STATS / "ablations_tier1_seedlevel.csv", index=False)
         counts = runs.groupby(["model", "split"]).size().unstack(fill_value=0)
         print(counts)
     if t2_path.exists():

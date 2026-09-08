@@ -83,11 +83,11 @@ Each model family is tuned on the validation set of seed 42, fold 0, separately 
 | Family | Grid |
 |---|---|
 | RF | n_estimators {500}, max_features {sqrt, 0.3}, min_samples_leaf {1, 3}, class_weight {None, balanced} (clf only) |
-| SVM / SVR | Tanimoto kernel on ECFP4; C {0.1, 1, 10}; SVR epsilon {0.05, 0.1, 0.2} |
+| SVM / SVR | Tanimoto kernel on ECFP4; C {0.1, 1, 10}; class_weight {None, balanced} (clf only); SVR epsilon {0.05, 0.1, 0.2} |
 | GCN | hidden {64, 128}; layers {2, 3}; lr 1e-3; dropout 0.1 |
 | MAT (scratch) | d_model {64, 128}; N {2, 4}; h 4; lr {5e-4, 1e-3}; dropout 0.1; λ = (0.33, 0.33, 0.34) |
 | MAT ablations | inherit MAT's frozen configuration, λ of the removed term set to 0 and the remaining two renormalised to 0.5 each |
-| ECFP+MAT hybrid | inherit MAT's configuration; ECFP projected to 128-d, concatenated with pooled MAT embedding |
+| ECFP+MAT hybrid | inherit MAT's configuration; ECFP projected to 128-d (ReLU), concatenated with the pooled MAT embedding, single linear output layer (same head depth as MAT) |
 | Pretrained MAT vs scratch MAT | fixed pretrained architecture (1024 / 8 / 16); lr {1e-4} pretrained fine-tune, {1e-4} scratch; identical epoch budget |
 
 ### 3.3 Compute tiers (CPU-only machine)

@@ -196,10 +196,17 @@ def run_torch(model_name: str, cfg: dict, recs, X_fp, y, task_type: str, fold: d
             total += float(loss.item()) * out.shape[0]
             count += out.shape[0]
         yv, pv = predict(model, model_name, val_loader, task_type, y_mu, y_sd)
-        vm = compute_metrics(task_type, yv * y_sd + y_mu if task_type == "reg" else yv, pv)
+        yv_orig = yv * y_sd + y_mu if task_type == "reg" else yv
+        if not np.all(np.isfinite(pv)):                 # diverged epoch: never select it, count towards patience
+            history.append({"epoch": epoch, "train_loss": total / max(count, 1), "diverged": True})
+            bad += 1
+            if bad >= patience:
+                break
+            continue
+        vm = compute_metrics(task_type, yv_orig, pv)
         score = _primary(vm, task_type)
-        if np.isnan(score):
-            score = -float(np.mean((pv - (yv * y_sd + y_mu if task_type == "reg" else yv)) ** 2))
+        if np.isnan(score):                              # single-class validation set: fall back to Brier / MSE
+            score = -float(np.mean((pv - yv_orig) ** 2))
         history.append({"epoch": epoch, "train_loss": total / max(count, 1), **{f"val_{k}": v for k, v in vm.items()}})
         if verbose:
             print(f"  epoch {epoch:3d} loss {total / max(count, 1):.4f} val {C.PRIMARY_METRIC[task_type]} {vm[C.PRIMARY_METRIC[task_type]]:.4f}")
@@ -210,6 +217,8 @@ def run_torch(model_name: str, cfg: dict, recs, X_fp, y, task_type: str, fold: d
             bad += 1
             if bad >= patience:
                 break
+    if best_state is None:
+        raise RuntimeError(f"{model_name}: no epoch produced finite validation predictions")
     model.load_state_dict(best_state)
     model.to(DEVICE)
     yv, pv = predict(model, model_name, val_loader, task_type, y_mu, y_sd)

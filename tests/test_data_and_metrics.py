@@ -42,9 +42,9 @@ def test_acyclic_molecules_are_spread_across_scaffold_folds():
     folds = D.make_splits(clean, "clf", "scaffold", 42)
     D.check_splits(clean, folds, "scaffold")
     acyclic_per_fold = [int((clean["scaffold"].values[f["test"]] == "").sum()) for f in folds]
-    assert min(acyclic_per_fold) >= 4, acyclic_per_fold
+    assert min(acyclic_per_fold) >= 1 and sum(acyclic_per_fold) == 40, acyclic_per_fold   # spread, not one block
     sizes = [len(f["test"]) for f in folds]
-    assert max(sizes) - min(sizes) <= 10, sizes
+    assert max(sizes) - min(sizes) <= 3, sizes
 
 
 def test_scaffold_split_is_seed_dependent_but_deterministic():

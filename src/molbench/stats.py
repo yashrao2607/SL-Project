@@ -208,6 +208,19 @@ def average_ranks(summary: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows).sort_values(["split", "avg_rank"]).reset_index(drop=True)
 
 
+def aggregate_by_seed(runs: pd.DataFrame) -> pd.DataFrame:
+    """Average the fold scores within each seed (n = 5 per model/task/split).
+
+    Fold-level scores within a seed share training data, and for datasets with one scaffold group
+    larger than a fold (ESOL, FreeSolv) one scaffold fold is identical across seeds; seed-level
+    aggregation is the conservative robustness check for the paired tests.
+    """
+    metrics = [m for m in C.CLF_METRICS + C.REG_METRICS if m in runs]
+    g = runs.groupby(["task", "task_type", "split", "model", "seed"], sort=False)[metrics].mean().reset_index()
+    g["fold"] = 0
+    return g
+
+
 def load_runs(path) -> pd.DataFrame:
     df = pd.read_csv(path)
     if "error" in df:

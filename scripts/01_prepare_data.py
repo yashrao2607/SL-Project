@@ -43,6 +43,7 @@ def main():
         print(f"[clean] {task:15s} raw={log['n_raw']:4d} clean={log['n_clean']:4d} scaffolds={log['n_scaffolds']:4d} "
               f"dups_removed={log['n_duplicate_rows_removed']} conflicts={log['n_conflicting_label_molecules_dropped']} "
               f"too_large={log['n_too_large']}")
+    (C.DATA_PROCESSED / "cleaning_log.json").write_text(json.dumps(logs, indent=2))   # written before the slow step
     print(f"[featurize] unique molecules across tasks: {len(all_smiles)}")
     cache = Fz.featurize_all(sorted(all_smiles), n_jobs=args.jobs)
     conf = Counter(cache[s]["conformer"] for s in all_smiles)

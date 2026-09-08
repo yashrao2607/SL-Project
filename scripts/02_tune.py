@@ -58,8 +58,11 @@ def main():
             best[fam].setdefault(task, {})
             for split in C.SPLITS:
                 sub = df[(df["model"] == fam) & (df["task"] == task) & (df["split"] == split)]
+                sub = sub.sort_values("config").reset_index(drop=True)      # deterministic tie-break
                 if sub.empty:
                     continue
+                if sub[metric].notna().sum() == 0:
+                    raise RuntimeError(f"no valid {metric} for {fam}/{task}/{split}")
                 idx = sub[metric].idxmax() if C.HIGHER_IS_BETTER[C.PRIMARY_METRIC[ttype]] else sub[metric].idxmin()
                 cfg = json.loads(sub.loc[idx, "config"])
                 best[fam][task][split] = cfg

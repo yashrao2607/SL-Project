@@ -19,7 +19,9 @@ def tiny():
     y_reg = np.array([len(s) + rng.randn() * 0.1 for s in SMILES], dtype=np.float32)
     n = len(SMILES)
     idx = list(range(n))
-    fold = {"train": idx[:16], "val": [16, 17, 21, 22], "test": [18, 19, 20, 23]}   # val and test both contain both classes
+    val, test = [16, 17, 21, 11], [18, 19, 22, 12]          # val and test each contain both classes
+    train = [i for i in idx if i not in val + test]
+    fold = {"train": train, "val": val, "test": test}
     return recs, X_fp, y_clf, y_reg, fold
 
 
