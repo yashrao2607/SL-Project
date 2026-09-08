@@ -82,10 +82,37 @@ def mol_collate(batch):
             "fp": torch.from_numpy(fp), "y": torch.from_numpy(y)}
 
 
+class BucketBatchSampler:
+    """Seeded 'sortish' batching: shuffle, sort by molecule size inside chunks of 20 batches, cut into
+    batches, shuffle the batch order. Keeps SGD randomness while cutting padding waste on CPU."""
+
+    def __init__(self, sizes, batch_size, seed, chunk_batches=20):
+        self.sizes = np.asarray(sizes)
+        self.batch_size = batch_size
+        self.rng = np.random.RandomState(seed)
+        self.chunk = batch_size * chunk_batches
+
+    def __iter__(self):
+        perm = self.rng.permutation(len(self.sizes))
+        batches = []
+        for s in range(0, len(perm), self.chunk):
+            chunk = perm[s:s + self.chunk]
+            chunk = chunk[np.argsort(self.sizes[chunk], kind="stable")]
+            batches += [chunk[i:i + self.batch_size].tolist() for i in range(0, len(chunk), self.batch_size)]
+        order = self.rng.permutation(len(batches))
+        for j in order:
+            yield batches[j]
+
+    def __len__(self):
+        return int(np.ceil(len(self.sizes) / self.batch_size))
+
+
 def make_loader(recs, X_fp, y, indices, batch_size, shuffle, seed):
     ds = MolDataset(recs, X_fp, y, indices)
-    gen = torch.Generator().manual_seed(seed) if shuffle else None
-    return DataLoader(ds, batch_size=batch_size, shuffle=shuffle, collate_fn=mol_collate, generator=gen)
+    if shuffle:
+        sampler = BucketBatchSampler([recs[i]["afm"].shape[0] for i in indices], batch_size, seed)
+        return DataLoader(ds, batch_sampler=sampler, collate_fn=mol_collate)
+    return DataLoader(ds, batch_size=batch_size, shuffle=False, collate_fn=mol_collate)
 
 
 def make_pyg_loader(recs, y, indices, batch_size, shuffle, seed):

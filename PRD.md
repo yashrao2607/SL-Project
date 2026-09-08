@@ -84,20 +84,20 @@ Each model family is tuned on the validation set of seed 42, fold 0, separately 
 |---|---|
 | RF | n_estimators {500}, max_features {sqrt, 0.3}, min_samples_leaf {1, 3}, class_weight {None, balanced} (clf only) |
 | SVM / SVR | Tanimoto kernel on ECFP4; C {0.1, 1, 10}; class_weight {None, balanced} (clf only); SVR epsilon {0.05, 0.1, 0.2} |
-| GCN | hidden {64, 128}; layers {2, 3}; lr 1e-3; dropout 0.1 |
-| MAT (scratch) | d_model {64, 128}; N {2, 4}; h 4; lr {5e-4, 1e-3}; dropout 0.1; λ = (0.33, 0.33, 0.34) |
+| GCN | hidden {64, 128}; layers {2, 3}; lr 1e-3; dropout 0.1; batch 64 |
+| MAT (scratch) | (d_model, N) ∈ {(64, 2), (64, 4), (128, 2)}; h 4; lr {5e-4, 1e-3}; dropout 0.1; batch 64; λ = (0.33, 0.33, 0.34). The (128, 4) cell was dropped after timing (3× the cost of (64, 2)) to keep the 2800-run CPU protocol tractable |
 | MAT ablations | inherit MAT's frozen configuration, λ of the removed term set to 0 and the remaining two renormalised to 0.5 each |
 | ECFP+MAT hybrid | inherit MAT's configuration; ECFP projected to 128-d (ReLU), concatenated with the pooled MAT embedding, single linear output layer (same head depth as MAT) |
-| Pretrained MAT vs scratch MAT | fixed pretrained architecture (1024 / 8 / 16); lr {1e-4} pretrained fine-tune, {1e-4} scratch; identical epoch budget |
+| Pretrained MAT vs scratch MAT | fixed pretrained architecture (1024 / 8 / 16); lr 1e-4 for both; batch 32; identical epoch budget (15 epochs, patience 5 on GPU; 8 epochs, patience 3 for the local CPU run) |
 
 ### 3.3 Compute tiers (CPU-only machine)
 
 | Tier | Models | Protocol | Runs |
 |---|---|---|---|
 | 1 (full) | RF, SVM/SVR, GCN, MAT, 3 ablations, hybrid | 5 seeds × 5 folds × 2 splits × 7 tasks | 8 × 350 = 2800 |
-| 2 (reduced, 42M-parameter model) | pretrained MAT, scratch MAT at pretrained size | 5 seeds × fold 0 × 2 splits × 7 tasks | 2 × 70 = 140 |
+| 2 (reduced, 42M-parameter model) | pretrained MAT, scratch MAT at pretrained size | 5 seeds × fold 0 × 2 splits × 7 tasks on a GPU (`notebooks/colab_tier2.ipynb`); locally (CPU, ~4 min per epoch) seed 42 × fold 0 × 2 splits × 7 tasks | 140 (GPU) / 28 (local CPU) |
 
-If measured run time makes Tier 2 exceed the wall-clock budget, the number of seeds for Tier 2 is reduced and the reduction is stated in the report. Nothing in Tier 1 is reduced.
+Measured on the execution machine: one epoch of the 42M-parameter model takes about 4 minutes with 8 threads, so the local Tier 2 is limited to seed 42; the notebook reproduces the 5-seed protocol on a free Colab GPU in about an hour. Nothing in Tier 1 is reduced. Deep models train for at most 60 epochs with early-stopping patience 10 (validation primary metric); parallel execution uses 14 single-thread workers.
 
 ### 3.4 Metrics and statistics
 

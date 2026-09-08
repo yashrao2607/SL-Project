@@ -27,8 +27,8 @@ def run(cmd: list[str]):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--smoke", action="store_true")
-    ap.add_argument("--workers", type=int, default=8)
-    ap.add_argument("--threads", type=int, default=2)
+    ap.add_argument("--workers", type=int, default=14)
+    ap.add_argument("--threads", type=int, default=1)
     ap.add_argument("--skip-tier2", action="store_true", help="skip the 42M-parameter pretrained-vs-scratch runs")
     args = ap.parse_args()
     run([PY, "-m", "pytest", "tests", "-q"])
@@ -47,7 +47,7 @@ def main():
     run([PY, "scripts/02_tune.py", "--workers", str(args.workers), "--threads", str(args.threads)])
     run([PY, "scripts/03_run_tier1.py", "--workers", str(args.workers), "--threads", str(args.threads)])
     if not args.skip_tier2:
-        run([PY, "scripts/04_run_tier2.py"])
+        run([PY, "scripts/04_run_tier2.py", "--local"])
     run([PY, "scripts/05_stats.py"])
     run([PY, "scripts/06_attention.py"])
     run([PY, "scripts/07_figures.py"])

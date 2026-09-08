@@ -21,12 +21,14 @@ def svm_grid(task_type: str):
 
 
 def gcn_grid(task_type: str):
-    return [dict(hidden=h, n_layers=l, lr=1e-3, dropout=0.1, batch_size=32) for h in [64, 128] for l in [2, 3]]
+    return [dict(hidden=h, n_layers=l, lr=1e-3, dropout=0.1, batch_size=64) for h in [64, 128] for l in [2, 3]]
 
 
 def mat_grid(task_type: str):
-    return [dict(d_model=d, N=n, h=4, lr=lr, dropout=0.1, batch_size=32, distance_matrix_kernel="softmax")
-            for d in [64, 128] for n in [2, 4] for lr in [5e-4, 1e-3]]
+    # (d_model, N) in {(64, 2), (64, 4), (128, 2)}: the (128, 4) cell costs 3x a (64, 2) run and is dropped
+    # to keep the 2800-run CPU protocol tractable (documented in PRD 3.2).
+    return [dict(d_model=d, N=n, h=4, lr=lr, dropout=0.1, batch_size=64, distance_matrix_kernel="softmax")
+            for (d, n) in [(64, 2), (64, 4), (128, 2)] for lr in [5e-4, 1e-3]]
 
 
 GRIDS = {"rf": rf_grid, "svm": svm_grid, "gcn": gcn_grid, "mat": mat_grid}
@@ -36,3 +38,5 @@ INHERITS_MAT = {"mat_nograph": "mat", "mat_nodistance": "mat", "mat_noattention"
 
 # Tier-2 (pretrained architecture) fixed configuration.
 TIER2_CONFIG = dict(lr=1e-4, batch_size=32, dropout=0.0, max_epochs=15, patience=5)
+# Local CPU-only Tier-2 budget (seed 42, fold 0): the full 5-seed protocol runs on a GPU via notebooks/colab_tier2.ipynb.
+TIER2_LOCAL = dict(seeds=[42], max_epochs=8, patience=3)

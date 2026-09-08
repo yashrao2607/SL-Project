@@ -23,12 +23,12 @@ TUNE_FOLD = 0
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--workers", type=int, default=8)
-    ap.add_argument("--threads", type=int, default=2)
+    ap.add_argument("--workers", type=int, default=14)
+    ap.add_argument("--threads", type=int, default=1)
     ap.add_argument("--families", nargs="+", default=list(GRIDS))
     ap.add_argument("--tasks", nargs="+", default=C.TASK_NAMES)
-    ap.add_argument("--max-epochs", type=int, default=100)
-    ap.add_argument("--patience", type=int, default=15)
+    ap.add_argument("--max-epochs", type=int, default=60)
+    ap.add_argument("--patience", type=int, default=10)
     args = ap.parse_args()
     C.ensure_dirs()
     csv_path = C.RESULTS_TUNING / "tuning_runs.csv"
