@@ -1,0 +1,26 @@
+[clean] bbbp            raw=2039 clean=1953 scaffolds=1014 dups_removed=84 conflicts=11 too_large=2
+[clean] esol            raw=1128 clean=1111 scaffolds= 266 dups_removed=17 conflicts=6 too_large=0
+[clean] freesolv        raw= 642 clean= 642 scaffolds=  63 dups_removed=0 conflicts=0 too_large=0
+[clean] estrogen-alpha  raw=2398 clean=2391 scaffolds=1107 dups_removed=2 conflicts=0 too_large=5
+[clean] estrogen-beta   raw=1961 clean=1959 scaffolds= 897 dups_removed=2 conflicts=0 too_large=0
+[clean] metstab-high    raw=2127 clean=2059 scaffolds= 987 dups_removed=67 conflicts=3 too_large=1
+[clean] metstab-low     raw=2127 clean=2056 scaffolds= 984 dups_removed=70 conflicts=6 too_large=1
+[featurize] unique molecules across tasks: 8421
+[featurize] cached=0 todo=8421 n_jobs=12
+[featurize] 500/8421
+[featurize] 1000/8421
+[featurize] 1500/8421
+[featurize] 2000/8421
+[featurize] 2500/8421
+[featurize] 3000/8421
+[featurize] 3500/8421
+[featurize] 4000/8421
+[featurize] 4500/8421
+[featurize] 5000/8421
+[featurize] 5500/8421
+[featurize] 6000/8421
+[featurize] 6500/8421
+[featurize] 7000/8421
+[featurize] 7500/8421
+[featurize] 8000/8421
+[done] conformers: {'etkdg': 8407, '2d': 14}  total 359s

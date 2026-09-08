@@ -1,0 +1,12 @@
+# Exact versions used for the reported results (Python 3.11.9, Windows 11, CPU-only)
+numpy==2.3.1
+pandas==2.2.3
+scipy==1.15.2
+scikit-learn==1.6.1
+torch==2.7.0
+torch_geometric==2.8.0.post1
+rdkit==2026.3.6
+matplotlib==3.9.2
+seaborn==0.13.2
+pytest==8.3.4
+gdown==6.2.0

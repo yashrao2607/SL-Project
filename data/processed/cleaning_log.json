@@ -1,0 +1,613 @@
+{
+  "bbbp": {
+    "n_raw": 2039,
+    "n_unparsable": 0,
+    "n_multi_fragment": 105,
+    "n_too_large": 2,
+    "n_duplicate_rows_removed": 84,
+    "n_conflicting_label_molecules_dropped": 11,
+    "n_clean": 1953,
+    "n_scaffolds": 1014,
+    "positive_rate": 0.7649769585253456,
+    "fold_sizes": {
+      "random_seed42_test_sizes": [
+        391,
+        391,
+        391,
+        390,
+        390
+      ],
+      "random_seed123_test_sizes": [
+        391,
+        391,
+        391,
+        390,
+        390
+      ],
+      "random_seed456_test_sizes": [
+        391,
+        391,
+        391,
+        390,
+        390
+      ],
+      "random_seed789_test_sizes": [
+        391,
+        391,
+        391,
+        390,
+        390
+      ],
+      "random_seed1011_test_sizes": [
+        391,
+        391,
+        391,
+        390,
+        390
+      ],
+      "scaffold_seed42_test_sizes": [
+        391,
+        391,
+        391,
+        390,
+        390
+      ],
+      "scaffold_seed123_test_sizes": [
+        391,
+        391,
+        391,
+        390,
+        390
+      ],
+      "scaffold_seed456_test_sizes": [
+        391,
+        391,
+        391,
+        390,
+        390
+      ],
+      "scaffold_seed789_test_sizes": [
+        391,
+        391,
+        391,
+        390,
+        390
+      ],
+      "scaffold_seed1011_test_sizes": [
+        391,
+        391,
+        391,
+        390,
+        390
+      ]
+    }
+  },
+  "esol": {
+    "n_raw": 1128,
+    "n_unparsable": 0,
+    "n_multi_fragment": 0,
+    "n_too_large": 0,
+    "n_duplicate_rows_removed": 17,
+    "n_conflicting_label_molecules_dropped": 6,
+    "n_clean": 1111,
+    "n_scaffolds": 266,
+    "y_mean": -0.0029524905293344204,
+    "y_std": 1.0005403983319117,
+    "original_units": {
+      "task": "esol",
+      "unit": "log10(mol/L)",
+      "scale_a": 2.0955117304559443,
+      "offset_b": -3.0501019503546116,
+      "n_matched": 1111,
+      "max_abs_residual": 4.440892098500626e-15,
+      "source": "delaney-processed.csv"
+    },
+    "fold_sizes": {
+      "random_seed42_test_sizes": [
+        223,
+        222,
+        222,
+        222,
+        222
+      ],
+      "random_seed123_test_sizes": [
+        223,
+        222,
+        222,
+        222,
+        222
+      ],
+      "random_seed456_test_sizes": [
+        223,
+        222,
+        222,
+        222,
+        222
+      ],
+      "random_seed789_test_sizes": [
+        223,
+        222,
+        222,
+        222,
+        222
+      ],
+      "random_seed1011_test_sizes": [
+        223,
+        222,
+        222,
+        222,
+        222
+      ],
+      "scaffold_seed42_test_sizes": [
+        315,
+        253,
+        181,
+        181,
+        181
+      ],
+      "scaffold_seed123_test_sizes": [
+        315,
+        253,
+        181,
+        181,
+        181
+      ],
+      "scaffold_seed456_test_sizes": [
+        315,
+        253,
+        181,
+        181,
+        181
+      ],
+      "scaffold_seed789_test_sizes": [
+        315,
+        253,
+        181,
+        181,
+        181
+      ],
+      "scaffold_seed1011_test_sizes": [
+        315,
+        253,
+        181,
+        181,
+        181
+      ]
+    }
+  },
+  "freesolv": {
+    "n_raw": 642,
+    "n_unparsable": 0,
+    "n_multi_fragment": 0,
+    "n_too_large": 0,
+    "n_duplicate_rows_removed": 0,
+    "n_conflicting_label_molecules_dropped": 0,
+    "n_clean": 642,
+    "n_scaffolds": 63,
+    "y_mean": 6.640586315514955e-16,
+    "y_std": 1.0007797272139836,
+    "original_units": {
+      "task": "freesolv",
+      "unit": "kcal/mol",
+      "scale_a": 3.8448222046029534,
+      "offset_b": -3.803006230529596,
+      "n_matched": 642,
+      "max_abs_residual": 7.105427357601002e-15,
+      "source": "freesolv_database.txt"
+    },
+    "fold_sizes": {
+      "random_seed42_test_sizes": [
+        129,
+        129,
+        128,
+        128,
+        128
+      ],
+      "random_seed123_test_sizes": [
+        129,
+        129,
+        128,
+        128,
+        128
+      ],
+      "random_seed456_test_sizes": [
+        129,
+        129,
+        128,
+        128,
+        128
+      ],
+      "random_seed789_test_sizes": [
+        129,
+        129,
+        128,
+        128,
+        128
+      ],
+      "random_seed1011_test_sizes": [
+        129,
+        129,
+        128,
+        128,
+        128
+      ],
+      "scaffold_seed42_test_sizes": [
+        320,
+        152,
+        57,
+        57,
+        56
+      ],
+      "scaffold_seed123_test_sizes": [
+        320,
+        152,
+        57,
+        57,
+        56
+      ],
+      "scaffold_seed456_test_sizes": [
+        320,
+        152,
+        57,
+        57,
+        56
+      ],
+      "scaffold_seed789_test_sizes": [
+        320,
+        152,
+        57,
+        57,
+        56
+      ],
+      "scaffold_seed1011_test_sizes": [
+        320,
+        152,
+        57,
+        57,
+        56
+      ]
+    }
+  },
+  "estrogen-alpha": {
+    "n_raw": 2398,
+    "n_unparsable": 0,
+    "n_multi_fragment": 20,
+    "n_too_large": 5,
+    "n_duplicate_rows_removed": 2,
+    "n_conflicting_label_molecules_dropped": 0,
+    "n_clean": 2391,
+    "n_scaffolds": 1107,
+    "positive_rate": 0.4847344207444584,
+    "fold_sizes": {
+      "random_seed42_test_sizes": [
+        479,
+        478,
+        478,
+        478,
+        478
+      ],
+      "random_seed123_test_sizes": [
+        479,
+        478,
+        478,
+        478,
+        478
+      ],
+      "random_seed456_test_sizes": [
+        479,
+        478,
+        478,
+        478,
+        478
+      ],
+      "random_seed789_test_sizes": [
+        479,
+        478,
+        478,
+        478,
+        478
+      ],
+      "random_seed1011_test_sizes": [
+        479,
+        478,
+        478,
+        478,
+        478
+      ],
+      "scaffold_seed42_test_sizes": [
+        479,
+        478,
+        478,
+        478,
+        478
+      ],
+      "scaffold_seed123_test_sizes": [
+        479,
+        478,
+        478,
+        478,
+        478
+      ],
+      "scaffold_seed456_test_sizes": [
+        479,
+        478,
+        478,
+        478,
+        478
+      ],
+      "scaffold_seed789_test_sizes": [
+        479,
+        478,
+        478,
+        478,
+        478
+      ],
+      "scaffold_seed1011_test_sizes": [
+        479,
+        478,
+        478,
+        478,
+        478
+      ]
+    }
+  },
+  "estrogen-beta": {
+    "n_raw": 1961,
+    "n_unparsable": 0,
+    "n_multi_fragment": 17,
+    "n_too_large": 0,
+    "n_duplicate_rows_removed": 2,
+    "n_conflicting_label_molecules_dropped": 0,
+    "n_clean": 1959,
+    "n_scaffolds": 897,
+    "positive_rate": 0.590096988259316,
+    "fold_sizes": {
+      "random_seed42_test_sizes": [
+        392,
+        392,
+        392,
+        392,
+        391
+      ],
+      "random_seed123_test_sizes": [
+        392,
+        392,
+        392,
+        392,
+        391
+      ],
+      "random_seed456_test_sizes": [
+        392,
+        392,
+        392,
+        392,
+        391
+      ],
+      "random_seed789_test_sizes": [
+        392,
+        392,
+        392,
+        392,
+        391
+      ],
+      "random_seed1011_test_sizes": [
+        392,
+        392,
+        392,
+        392,
+        391
+      ],
+      "scaffold_seed42_test_sizes": [
+        392,
+        392,
+        392,
+        392,
+        391
+      ],
+      "scaffold_seed123_test_sizes": [
+        392,
+        392,
+        392,
+        392,
+        391
+      ],
+      "scaffold_seed456_test_sizes": [
+        392,
+        392,
+        392,
+        392,
+        391
+      ],
+      "scaffold_seed789_test_sizes": [
+        392,
+        392,
+        392,
+        392,
+        391
+      ],
+      "scaffold_seed1011_test_sizes": [
+        392,
+        392,
+        392,
+        392,
+        391
+      ]
+    }
+  },
+  "metstab-high": {
+    "n_raw": 2127,
+    "n_unparsable": 0,
+    "n_multi_fragment": 54,
+    "n_too_large": 1,
+    "n_duplicate_rows_removed": 67,
+    "n_conflicting_label_molecules_dropped": 3,
+    "n_clean": 2059,
+    "n_scaffolds": 987,
+    "positive_rate": 0.12190383681398738,
+    "fold_sizes": {
+      "random_seed42_test_sizes": [
+        412,
+        412,
+        412,
+        412,
+        411
+      ],
+      "random_seed123_test_sizes": [
+        412,
+        412,
+        412,
+        412,
+        411
+      ],
+      "random_seed456_test_sizes": [
+        412,
+        412,
+        412,
+        412,
+        411
+      ],
+      "random_seed789_test_sizes": [
+        412,
+        412,
+        412,
+        412,
+        411
+      ],
+      "random_seed1011_test_sizes": [
+        412,
+        412,
+        412,
+        412,
+        411
+      ],
+      "scaffold_seed42_test_sizes": [
+        412,
+        412,
+        412,
+        412,
+        411
+      ],
+      "scaffold_seed123_test_sizes": [
+        412,
+        412,
+        412,
+        412,
+        411
+      ],
+      "scaffold_seed456_test_sizes": [
+        412,
+        412,
+        412,
+        412,
+        411
+      ],
+      "scaffold_seed789_test_sizes": [
+        412,
+        412,
+        412,
+        412,
+        411
+      ],
+      "scaffold_seed1011_test_sizes": [
+        412,
+        412,
+        412,
+        412,
+        411
+      ]
+    }
+  },
+  "metstab-low": {
+    "n_raw": 2127,
+    "n_unparsable": 0,
+    "n_multi_fragment": 54,
+    "n_too_large": 1,
+    "n_duplicate_rows_removed": 70,
+    "n_conflicting_label_molecules_dropped": 6,
+    "n_clean": 2056,
+    "n_scaffolds": 984,
+    "positive_rate": 0.5544747081712063,
+    "fold_sizes": {
+      "random_seed42_test_sizes": [
+        412,
+        411,
+        411,
+        411,
+        411
+      ],
+      "random_seed123_test_sizes": [
+        412,
+        411,
+        411,
+        411,
+        411
+      ],
+      "random_seed456_test_sizes": [
+        412,
+        411,
+        411,
+        411,
+        411
+      ],
+      "random_seed789_test_sizes": [
+        412,
+        411,
+        411,
+        411,
+        411
+      ],
+      "random_seed1011_test_sizes": [
+        412,
+        411,
+        411,
+        411,
+        411
+      ],
+      "scaffold_seed42_test_sizes": [
+        412,
+        411,
+        411,
+        411,
+        411
+      ],
+      "scaffold_seed123_test_sizes": [
+        412,
+        411,
+        411,
+        411,
+        411
+      ],
+      "scaffold_seed456_test_sizes": [
+        412,
+        411,
+        411,
+        411,
+        411
+      ],
+      "scaffold_seed789_test_sizes": [
+        412,
+        411,
+        411,
+        411,
+        411
+      ],
+      "scaffold_seed1011_test_sizes": [
+        412,
+        411,
+        411,
+        411,
+        411
+      ]
+    }
+  },
+  "_featurization": {
+    "n_unique_molecules": 8421,
+    "conformer_methods": {
+      "etkdg": 8407,
+      "2d": 14
+    },
+    "d_atom": 28,
+    "ecfp_bits": 2048,
+    "seconds": 359.0
+  }
+}

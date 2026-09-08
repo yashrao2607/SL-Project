@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "molbench"
+version = "1.0.0"
+description = "Statistical evaluation and extension of the Molecule Attention Transformer (DSC4804, Group 14)"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy", "pandas", "scipy", "scikit-learn", "torch", "torch_geometric", "rdkit", "matplotlib", "seaborn",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

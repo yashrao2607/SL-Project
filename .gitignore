@@ -1,0 +1,23 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+build/
+dist/
+.venv/
+venv/
+
+# ---- Large / regenerable artefacts (re-created by scripts/01_prepare_data.py and run_all.py) ----
+data/pretrained/*.pt
+data/processed/features/
+results/checkpoints/
+molbench_colab_bundle.zip
+
+# ---- OS / editor ----
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log
