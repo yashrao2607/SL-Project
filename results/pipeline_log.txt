@@ -1,2 +1,18 @@
 
 $ C:\Users\yashr\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\python.exe -m pytest tests -q
+........................................                                 [100%]
+40 passed in 17.14s
+
+$ C:\Users\yashr\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\python.exe scripts/01_prepare_data.py --jobs 14
+[clean] bbbp            raw=2039 clean=1953 scaffolds=1014 dups_removed=84 conflicts=11 too_large=2
+[clean] esol            raw=1128 clean=1111 scaffolds= 266 dups_removed=17 conflicts=6 too_large=0
+[clean] freesolv        raw= 642 clean= 642 scaffolds=  63 dups_removed=0 conflicts=0 too_large=0
+[clean] estrogen-alpha  raw=2398 clean=2391 scaffolds=1107 dups_removed=2 conflicts=0 too_large=5
+[clean] estrogen-beta   raw=1961 clean=1959 scaffolds= 897 dups_removed=2 conflicts=0 too_large=0
+[clean] metstab-high    raw=2127 clean=2059 scaffolds= 987 dups_removed=67 conflicts=3 too_large=1
+[clean] metstab-low     raw=2127 clean=2056 scaffolds= 984 dups_removed=70 conflicts=6 too_large=1
+[featurize] unique molecules across tasks: 8421
+[featurize] cached=8421 todo=0 n_jobs=14
+[done] conformers: {'etkdg': 8407, '2d': 14}  total 34s
+
+$ C:\Users\yashr\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\python.exe scripts/02_tune.py --workers 14 --threads 1
