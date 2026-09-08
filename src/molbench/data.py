@@ -191,8 +191,8 @@ def load_splits(task: str, split: str, seed: int) -> list[dict]:
     return json.loads(split_path(task, split, seed).read_text())
 
 
-def check_splits(df: pd.DataFrame, folds: list[dict], split: str) -> None:
-    """Raise if folds are not disjoint / exhaustive / scaffold-disjoint."""
+def check_splits(df: pd.DataFrame, folds: list[dict], split: str, balance_tol: float | None = 1.5) -> None:
+    """Raise if folds are not disjoint / exhaustive / scaffold-disjoint / badly unbalanced."""
     n = len(df)
     tests = [set(f["test"]) for f in folds]
     union = set().union(*tests)
@@ -200,8 +200,9 @@ def check_splits(df: pd.DataFrame, folds: list[dict], split: str) -> None:
     assert sum(len(t) for t in tests) == n, "test folds overlap"
     scaf = df["scaffold"].fillna("").values
     sizes = [len(t) for t in tests]
-    assert max(sizes) <= 1.5 * n / len(folds), f"unbalanced test folds: {sizes}"
-    assert min(sizes) >= 0.5 * n / len(folds), f"unbalanced test folds: {sizes}"
+    if balance_tol is not None:
+        assert max(sizes) <= balance_tol * n / len(folds), f"unbalanced test folds: {sizes}"
+        assert min(sizes) >= n / (balance_tol * len(folds)), f"unbalanced test folds: {sizes}"
     for f in folds:
         tr, va, te = set(f["train"]), set(f["val"]), set(f["test"])
         assert not (tr & va) and not (tr & te) and not (va & te), "train/val/test overlap"

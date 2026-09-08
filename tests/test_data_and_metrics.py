@@ -31,7 +31,7 @@ def test_scaffold_folds_disjoint_and_exhaustive():
     clean, _ = D.clean_dataset(df, "clf")
     for split in ["random", "scaffold"]:
         folds = D.make_splits(clean, "clf", split, 42)
-        D.check_splits(clean, folds, split)
+        D.check_splits(clean, folds, split, balance_tol=None)   # 25 molecules: balance guard not meaningful
 
 
 def test_acyclic_molecules_are_spread_across_scaffold_folds():
