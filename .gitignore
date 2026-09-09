@@ -13,7 +13,13 @@ venv/
 data/pretrained/*.pt
 data/processed/features/
 results/checkpoints/
+results_smoke/
 molbench_colab_bundle.zip
+kaggle/dataset/
+kaggle/dataset_*/
+kaggle/dataset2/
+kaggle/output/
+kaggle.json
 
 # ---- OS / editor ----
 .DS_Store

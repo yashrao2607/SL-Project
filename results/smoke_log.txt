@@ -1,0 +1,122 @@
+smoke mode: outputs go to results_smoke/
+
+$ C:\Users\yashr\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\python.exe -m pytest tests -q
+........................................                                 [100%]
+40 passed in 11.44s
+
+$ C:\Users\yashr\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\python.exe scripts/01_prepare_data.py --jobs 14
+[clean] bbbp            raw=2039 clean=1953 scaffolds=1014 dups_removed=84 conflicts=11 too_large=2
+[clean] esol            raw=1128 clean=1111 scaffolds= 266 dups_removed=17 conflicts=6 too_large=0
+[clean] freesolv        raw= 642 clean= 642 scaffolds=  63 dups_removed=0 conflicts=0 too_large=0
+[clean] estrogen-alpha  raw=2398 clean=2391 scaffolds=1107 dups_removed=2 conflicts=0 too_large=5
+[clean] estrogen-beta   raw=1961 clean=1959 scaffolds= 897 dups_removed=2 conflicts=0 too_large=0
+[clean] metstab-high    raw=2127 clean=2059 scaffolds= 987 dups_removed=67 conflicts=3 too_large=1
+[clean] metstab-low     raw=2127 clean=2056 scaffolds= 984 dups_removed=70 conflicts=6 too_large=1
+[featurize] unique molecules across tasks: 8421
+[featurize] cached=8421 todo=0 n_jobs=14
+[done] conformers: {'etkdg': 8407, '2d': 14}  total 15s
+
+$ C:\Users\yashr\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\python.exe scripts/02_tune.py --families rf svm gcn mat --tasks freesolv --workers 14 --threads 1 --max-epochs 3 --patience 2
+[grid] 46 jobs, 0 done, 46 to run, workers=14 threads=1
+[grid] 10/46 done, 0.3 min elapsed, eta 1.2 min
+[grid] 20/46 done, 0.4 min elapsed, eta 0.5 min
+[grid] 30/46 done, 0.4 min elapsed, eta 0.2 min
+[grid] 40/46 done, 0.5 min elapsed, eta 0.1 min
+[grid] 46/46 done, 0.5 min elapsed, eta 0.0 min
+  family      task     split  n_configs  val_rmse                                                                                                                config
+0     rf  freesolv    random          4  0.866699                                                     {"max_features": 0.3, "min_samples_leaf": 3, "n_estimators": 500}
+1     rf  freesolv  scaffold          4  0.459331                                                     {"max_features": 0.3, "min_samples_leaf": 1, "n_estimators": 500}
+2    svm  freesolv    random          9  0.787135                                                                                          {"C": 10.0, "epsilon": 0.05}
+3    svm  freesolv  scaffold          9  0.303178                                                                                          {"C": 10.0, "epsilon": 0.05}
+4    gcn  freesolv    random          4  1.052642                                         {"batch_size": 64, "dropout": 0.1, "hidden": 128, "lr": 0.001, "n_layers": 3}
+5    gcn  freesolv  scaffold          4  0.607424                                         {"batch_size": 64, "dropout": 0.1, "hidden": 128, "lr": 0.001, "n_layers": 3}
+6    mat  freesolv    random          6  0.930552  {"N": 2, "batch_size": 64, "d_model": 128, "distance_matrix_kernel": "softmax", "dropout": 0.1, "h": 4, "lr": 0.001}
+7    mat  freesolv  scaffold          6  0.495006   {"N": 4, "batch_size": 64, "d_model": 64, "distance_matrix_kernel": "softmax", "dropout": 0.1, "h": 4, "lr": 0.001}
+
+$ C:\Users\yashr\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\python.exe scripts/03_run_tier1.py --tasks freesolv --workers 14 --threads 1 --max-epochs 3 --patience 2
+[grid] 400 jobs, 0 done, 400 to run, workers=14 threads=1
+[grid] 10/400 done, 0.3 min elapsed, eta 13.5 min
+[grid] 20/400 done, 0.5 min elapsed, eta 9.1 min
+[grid] 30/400 done, 0.5 min elapsed, eta 6.1 min
+[grid] 40/400 done, 0.5 min elapsed, eta 4.5 min
+[grid] 50/400 done, 0.6 min elapsed, eta 4.4 min
+[grid] 60/400 done, 0.6 min elapsed, eta 3.6 min
+[grid] 70/400 done, 0.8 min elapsed, eta 3.8 min
+[grid] 80/400 done, 0.8 min elapsed, eta 3.3 min
+[grid] 90/400 done, 0.9 min elapsed, eta 2.9 min
+[grid] 100/400 done, 0.9 min elapsed, eta 2.8 min
+[grid] 110/400 done, 1.0 min elapsed, eta 2.7 min
+[grid] 120/400 done, 1.0 min elapsed, eta 2.4 min
+[grid] 130/400 done, 1.1 min elapsed, eta 2.3 min
+[grid] 140/400 done, 1.1 min elapsed, eta 2.1 min
+[grid] 150/400 done, 1.2 min elapsed, eta 2.0 min
+[grid] 160/400 done, 1.2 min elapsed, eta 1.8 min
+[grid] 170/400 done, 1.3 min elapsed, eta 1.7 min
+[grid] 180/400 done, 1.3 min elapsed, eta 1.6 min
+[grid] 190/400 done, 1.3 min elapsed, eta 1.5 min
+[grid] 200/400 done, 1.4 min elapsed, eta 1.4 min
+[grid] 210/400 done, 1.4 min elapsed, eta 1.3 min
+[grid] 220/400 done, 1.5 min elapsed, eta 1.2 min
+[grid] 230/400 done, 1.5 min elapsed, eta 1.1 min
+[grid] 240/400 done, 1.5 min elapsed, eta 1.0 min
+[grid] 250/400 done, 1.6 min elapsed, eta 1.0 min
+[grid] 260/400 done, 1.6 min elapsed, eta 0.9 min
+[grid] 270/400 done, 1.7 min elapsed, eta 0.8 min
+[grid] 280/400 done, 1.7 min elapsed, eta 0.7 min
+[grid] 290/400 done, 1.7 min elapsed, eta 0.7 min
+[grid] 300/400 done, 1.8 min elapsed, eta 0.6 min
+[grid] 310/400 done, 1.8 min elapsed, eta 0.5 min
+[grid] 320/400 done, 1.9 min elapsed, eta 0.5 min
+[grid] 330/400 done, 1.9 min elapsed, eta 0.4 min
+[grid] 340/400 done, 2.0 min elapsed, eta 0.3 min
+[grid] 350/400 done, 2.0 min elapsed, eta 0.3 min
+[grid] 360/400 done, 2.0 min elapsed, eta 0.2 min
+[grid] 370/400 done, 2.1 min elapsed, eta 0.2 min
+[grid] 380/400 done, 2.1 min elapsed, eta 0.1 min
+[grid] 390/400 done, 2.2 min elapsed, eta 0.1 min
+[grid] 400/400 done, 2.2 min elapsed, eta 0.0 min
+
+$ C:\Users\yashr\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\python.exe scripts/04_run_tier2.py --tasks freesolv --seeds 42 --workers 1 --threads 8 --max-epochs 1 --patience 1
+[grid] 4 jobs, 0 done, 4 to run, workers=1 threads=8
+[grid] 4/4 done, 1.0 min elapsed, eta 0.0 min
+
+$ C:\Users\yashr\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\python.exe scripts/05_stats.py
+D:\SL Project\src\molbench\stats.py:180: RuntimeWarning: Degrees of freedom <= 0 for slice
+  se = np.sqrt(x.var(ddof=1) / len(x) + y.var(ddof=1) / len(y))
+C:\Users\yashr\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\numpy\_core\_methods.py:214: RuntimeWarning: invalid value encountered in scalar divide
+  ret = ret.dtype.type(ret / rcount)
+D:\SL Project\src\molbench\stats.py:181: RuntimeWarning: Degrees of freedom <= 0 for slice
+  dof = se ** 4 / ((x.var(ddof=1) / len(x)) ** 2 / (len(x) - 1) + (y.var(ddof=1) / len(y)) ** 2 / (len(y) - 1))
+[stats] tier1 rows: 400
+split            random  scaffold
+model                            
+gcn                  25        25
+hybrid               25        25
+mat                  25        25
+mat_noattention      25        25
+mat_nodistance       25        25
+mat_nograph          25        25
+rf                   25        25
+svm                  25        25
+[stats] tier2 rows: 4
+[stats] done
+
+$ C:\Users\yashr\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\python.exe scripts/06_attention.py --tasks freesolv --splits random
+[attention] training MAT on freesolv/random cfg={'N': 2, 'batch_size': 64, 'd_model': 128, 'distance_matrix_kernel': 'softmax', 'dropout': 0.1, 'h': 4, 'lr': 0.001}
+           bonded_share  self_share  dummy_share  dist_corr_spearman   entropy
+kind                                                                          
+attn           0.355523    0.372777     0.030170            0.655960  1.570097
+self_attn      0.192841    0.129418     0.091423           -0.103103  1.136750
+uniform baseline: {'bonded_share': 0.215, 'self_share': 0.123, 'dummy_share': 0.123}
+
+$ C:\Users\yashr\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\python.exe scripts/07_figures.py
+[figures] D:\SL Project\results_smoke\figures\fig_performance_random.png
+[figures] D:\SL Project\results_smoke\figures\fig_performance_scaffold.png
+[figures] D:\SL Project\results_smoke\figures\fig_ablations.png
+[figures] D:\SL Project\results_smoke\figures\fig_generalization_gap.png
+[figures] D:\SL Project\results_smoke\figures\fig_average_ranks.png
+[figures] D:\SL Project\results_smoke\figures\fig_pretrained_vs_scratch.png
+[figures] D:\SL Project\results_smoke\figures\fig_attention_heads_freesolv_random.png
+[figures] D:\SL Project\results_smoke\figures\fig_attention_classes_freesolv_random.png
+[figures] D:\SL Project\results_smoke\figures\fig_attention_examples_freesolv_random.png
+exit=0

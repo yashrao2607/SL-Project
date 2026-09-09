@@ -1,0 +1,20 @@
+{
+  "bonded_share": 0.16618604958057404,
+  "self_share": 0.08836202182501449,
+  "dummy_share": 0.08836202182501449,
+  "test_metrics": {
+    "rmse": 0.31814000970804857,
+    "mae": 0.2500442420466565,
+    "r2": 0.8895292787089777
+  },
+  "n_test_molecules": 223,
+  "config": {
+    "N": 4,
+    "batch_size": 64,
+    "d_model": 64,
+    "distance_matrix_kernel": "softmax",
+    "dropout": 0.1,
+    "h": 4,
+    "lr": 0.001
+  }
+}

@@ -1,0 +1,33 @@
+[grid] 400 jobs, 413 done, 300 to run, workers=10 threads=1
+[grid] 10/300 done, 8.9 min elapsed, eta 256.8 min
+[grid] 20/300 done, 14.6 min elapsed, eta 204.5 min
+[grid] 30/300 done, 20.9 min elapsed, eta 188.1 min
+[grid] 40/300 done, 25.9 min elapsed, eta 168.6 min
+[grid] 50/300 done, 32.0 min elapsed, eta 159.9 min
+[grid] 60/300 done, 38.1 min elapsed, eta 152.3 min
+[grid] 70/300 done, 43.9 min elapsed, eta 144.1 min
+[grid] 80/300 done, 49.5 min elapsed, eta 136.1 min
+[grid] 90/300 done, 55.9 min elapsed, eta 130.3 min
+[grid] 100/300 done, 62.0 min elapsed, eta 124.0 min
+[grid] 110/300 done, 67.7 min elapsed, eta 117.0 min
+[grid] 120/300 done, 73.9 min elapsed, eta 110.8 min
+[grid] 130/300 done, 80.2 min elapsed, eta 104.9 min
+[grid] 140/300 done, 85.7 min elapsed, eta 98.0 min
+[grid] 150/300 done, 90.7 min elapsed, eta 90.7 min
+[grid] 160/300 done, 95.4 min elapsed, eta 83.4 min
+[grid] 170/300 done, 102.2 min elapsed, eta 78.2 min
+[grid] 180/300 done, 107.3 min elapsed, eta 71.6 min
+[grid] 190/300 done, 114.0 min elapsed, eta 66.0 min
+[grid] 200/300 done, 119.5 min elapsed, eta 59.7 min
+[grid] 210/300 done, 125.9 min elapsed, eta 54.0 min
+[grid] 220/300 done, 132.2 min elapsed, eta 48.1 min
+[grid] 230/300 done, 137.1 min elapsed, eta 41.7 min
+[grid] 240/300 done, 142.0 min elapsed, eta 35.5 min
+[grid] 250/300 done, 147.3 min elapsed, eta 29.5 min
+[grid] 260/300 done, 153.9 min elapsed, eta 23.7 min
+[grid] 270/300 done, 159.3 min elapsed, eta 17.7 min
+[grid] 280/300 done, 166.5 min elapsed, eta 11.9 min
+[grid] 290/300 done, 173.1 min elapsed, eta 6.0 min
+[grid] 300/300 done, 178.6 min elapsed, eta 0.0 min
+[grid] 800 jobs, 2800 done, 0 to run, workers=10 threads=1
+[grid] 800 jobs, 2800 done, 0 to run, workers=10 threads=1

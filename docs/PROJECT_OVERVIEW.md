@@ -72,13 +72,52 @@ The plan (`PRD.md`) has four phases with three to four parts each. All parts wer
 
 ## 5. Results and findings
 
-The numbers live in `reports/REPORT.md` (generated) and are summarised, with interpretation, in Section 6 below once the pipeline has finished. The report is organised as: data (1), protocol (2), main results per split (3), statistical comparison against MAT (4), ablations (5), generalization gap (6), pretrained vs scratch (7), hybrid (8), attention (9), verdict on the hypothesis (10), limitations (11), reproducibility (12).
+Every number below is taken from `reports/REPORT.md`, which is generated from `results/` and checked by `scripts/verify_report.py` (542 checks, 0 failures). Execution record: Tier 1 = 2800 runs (2087 on Kaggle T4 GPUs, 713 on the laptop CPU), Tier 2 = 140 runs on Kaggle T4 GPUs, 0 failed runs, about 49 hours of model fitting summed over runs.
+
+**Main results (primary metric, mean over 25 folds; ROC-AUC for classification, z-scored RMSE for regression).**
+
+| Task (split) | RF | SVM/SVR | GCN | MAT | MAT-NoGraph | MAT-NoDistance | MAT-NoAttention | ECFP+MAT |
+|---|---|---|---|---|---|---|---|---|
+| BBBP (random) | 0.921 | 0.921 | 0.899 | 0.892 | 0.883 | 0.887 | 0.855 | 0.911 |
+| BBBP (scaffold) | 0.902 | 0.904 | 0.859 | 0.876 | 0.875 | 0.873 | 0.850 | 0.888 |
+| ESOL (random) ↓ | 0.574 | 0.485 | 0.457 | 0.385 | 0.411 | 0.391 | 0.453 | 0.491 |
+| ESOL (scaffold) ↓ | 0.773 | 0.631 | 0.510 | 0.499 | 0.524 | 0.493 | 0.510 | 0.590 |
+| FreeSolv (random) ↓ | 0.588 | 0.471 | 0.338 | 0.369 | 0.376 | 0.380 | 0.458 | 0.379 |
+| FreeSolv (scaffold) ↓ | 0.648 | 0.577 | 0.426 | 0.431 | 0.446 | 0.424 | 0.477 | 0.437 |
+| Estrogen-α (random) | 0.968 | 0.969 | 0.956 | 0.953 | 0.947 | 0.952 | 0.925 | 0.969 |
+| Estrogen-α (scaffold) | 0.952 | 0.954 | 0.949 | 0.937 | 0.929 | 0.932 | 0.912 | 0.948 |
+| Estrogen-β (random) | 0.926 | 0.929 | 0.913 | 0.893 | 0.878 | 0.888 | 0.852 | 0.922 |
+| Estrogen-β (scaffold) | 0.898 | 0.897 | 0.883 | 0.852 | 0.845 | 0.858 | 0.833 | 0.889 |
+| MetStab-high (random) | 0.902 | 0.904 | 0.848 | 0.791 | 0.778 | 0.789 | 0.734 | 0.898 |
+| MetStab-high (scaffold) | 0.870 | 0.861 | 0.774 | 0.751 | 0.736 | 0.752 | 0.696 | 0.851 |
+| MetStab-low (random) | 0.873 | 0.874 | 0.847 | 0.765 | 0.755 | 0.771 | 0.645 | 0.863 |
+| MetStab-low (scaffold) | 0.810 | 0.818 | 0.784 | 0.743 | 0.726 | 0.745 | 0.672 | 0.805 |
+
+In original units, MAT's ESOL RMSE is 0.81 log10(mol/L) on the random split (RF 1.20) and 1.05 on the scaffold split (RF 1.62); its FreeSolv RMSE is 1.42 kcal/mol (RF 2.26) and 1.66 kcal/mol (RF 2.49).
+
+**Statistical comparisons against MAT (Wilcoxon signed-rank on 25 paired folds, p < 0.05).**
+
+- RF and SVM/SVR beat the small scratch MAT on all five classification tasks under both splits; MAT beats them on both regression tasks under both splits. Count: MAT significantly better on 2/7 tasks, the classical models on 5/7, for each split.
+- GCN beats MAT on the MetStab tasks and Estrogen-β (and FreeSolv, random split); MAT beats GCN on ESOL (random) and BBBP (scaffold).
+- The ECFP+MAT hybrid beats MAT on every classification task (5/7 random, 4/7 scaffold significant; BBBP scaffold p = 0.055) and closes most of the gap to RF/SVM (for example MetStab-high random 0.898 vs RF 0.902); MAT beats the hybrid on ESOL under both splits. FreeSolv shows no significant difference.
+- Ablations: removing **self-attention** hurts significantly on 7/7 tasks (random) and 5/7 (scaffold); removing **graph structure** hurts significantly on 5/7 (random) and 3/7 (scaffold) with effects of about 0.01 ROC-AUC; removing **3D distances** changes nothing significantly on any task or split (every |Δ| ≤ 0.011). The seed-level robustness tests agree in direction.
+- Generalization gap (random minus scaffold ROC-AUC, mean over the five classification tasks): MAT 0.027, MAT-NoDistance 0.025, MAT-NoGraph 0.026, RF 0.032, SVM 0.033, hybrid 0.036, GCN 0.043, MAT-NoAttention 0.009 (but it is also the weakest model). On the regression tasks the scaffold split increases every model's RMSE, least for MAT on ESOL (+0.114 vs +0.198 for RF).
+- Pretrained vs scratch at the released 42M-parameter architecture (5 seeds, equal 15-epoch budget): pretraining improves the point estimate on 7/7 tasks (random) and 6/7 (scaffold), significantly by the paired t-test on Estrogen-α (both splits) and both MetStab endpoints (random); the largest gains are on MetStab (+0.05 to +0.07 ROC-AUC). ESOL under the scaffold split is the exception (pretrained worse, high variance). With this short fine-tuning budget the large models do not beat the small scratch MAT trained to convergence on most tasks.
+- Attention analysis (MAT on BBBP and ESOL): the learned self-attention is **not** local. Its share on bonded neighbours (0.07 to 0.14) is below the uniform baseline (0.09 to 0.17), its Spearman correlation with inverse distance is about −0.03 to −0.07, and it concentrates on the dummy node (up to 0.33 of the mass on ESOL) and on heteroatoms (2 to 4 times the attention received by aromatic carbons in layer 1). Locality comes entirely from the injected adjacency and distance terms: the fused attention has a bonded share of 0.33 to 0.35 and a distance correlation of 0.6 to 0.7.
 
 ---
 
 ## 6. Interpretation
 
-_This section is completed after the benchmark finishes; see the end of this file._
+**Does graph structure and 3D geometry help attention?** Partly. The learned self-attention is the single most valuable term (removing it costs 0.02 to 0.12 ROC-AUC and 0.05 to 0.09 RMSE in z-units). Graph structure adds a small but consistent gain on classification (about 0.01 ROC-AUC, significant on five of seven tasks under the random split). The 3D distance term adds nothing measurable at this scale: the adjacency term already supplies locality, and the attention analysis shows that the learned heads use the freedom the distance term is supposed to give them for global, heteroatom-centred patterns rather than proximity. The charter's hypothesis is therefore supported for graph structure and for attention itself, and not supported for 3D distances.
+
+**Does the structure improve out-of-distribution generalization?** Modestly. MAT and its structured ablations lose less ROC-AUC from random to scaffold split (about 0.026) than RF, SVM (0.032 to 0.033) or GCN (0.043), and on ESOL MAT degrades far less than RF. But a smaller gap does not make MAT the best out-of-distribution model: on every classification task the fingerprint models still score higher in absolute terms under the scaffold split.
+
+**Which model should a practitioner use?** For the physical-chemistry regressions (solubility, hydration free energy), the geometry-aware transformer is clearly best: a third lower RMSE than RF in original units. For the bioactivity and ADME classifications, a well-tuned Random Forest or Tanimoto SVM on ECFP4 remains the strongest and cheapest choice, and a small MAT trained from scratch does not match it. The late-fusion hybrid is the practical compromise: it recovers almost all of the fingerprint models' classification accuracy while keeping most of MAT's regression accuracy, which is exactly the low-data recipe the charter hoped for.
+
+**What does pretraining buy?** Relative to the same architecture trained from scratch with the same short budget, pretraining helps on almost every task and most on the small, imbalanced MetStab endpoints. In absolute terms, at a 15-epoch budget the 42M-parameter models do not beat a 100k-parameter MAT trained to convergence, so the reported strength of pretrained MAT in the literature depends on longer fine-tuning than a course-project budget allows. Separating these two statements is precisely the point of the pretrained-versus-scratch comparison.
+
+**Caveats that matter for reading the numbers.** The MAT models in Tier 1 are small (64 to 128 dimensions, 2 to 4 layers) because of the CPU-first budget, so the comparison is "small MAT from scratch" versus "tuned classical models"; the fingerprint models' advantage on classification may shrink with the paper-scale architecture. The scaffold folds are seed-dependent except for the benzene scaffold group on ESOL and FreeSolv, which is larger than a fold; seed-level tests are reported for that reason. Cross-validation folds share training data, so paired p-values are optimistic and Holm-adjusted values are reported alongside.
 
 ---
 

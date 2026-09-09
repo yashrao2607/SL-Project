@@ -184,8 +184,8 @@ def plot_pretrained_vs_scratch(summary2: pd.DataFrame, comp: pd.DataFrame, out: 
         for i, t in enumerate(tasks):
             r = comp[(comp["split"] == split) & (comp["task"] == t)]
             r = r[r.apply(lambda q: q["metric"] == C.PRIMARY_METRIC[q["task_type"]], axis=1)]
-            if not r.empty and not np.isnan(r.iloc[0]["wilcoxon_p"]):
-                ax.text(i, tops[i] * 1.06, f"p={r.iloc[0]['wilcoxon_p']:.3f}", ha="center", va="bottom", fontsize=7, color=TEXT2)
+            if not r.empty and not np.isnan(r.iloc[0]["t_p"]):
+                ax.text(i, tops[i] * 1.06, f"p={r.iloc[0]['t_p']:.3f}", ha="center", va="bottom", fontsize=7, color=TEXT2)
         ax.set_ylim(0, max(tops.max() * 1.18, 0.1))
         ax.set_xticks(x)
         ax.set_xticklabels([f"{TASK_LABELS[t]}\n({METRIC_LABELS[C.PRIMARY_METRIC[C.TASKS[t]['type']]]})" for t in tasks], fontsize=7.5)
@@ -194,7 +194,7 @@ def plot_pretrained_vs_scratch(summary2: pd.DataFrame, comp: pd.DataFrame, out: 
     handles, labels = axes[0].get_legend_handles_labels()
     fig.legend(handles, labels, loc="lower center", ncol=2, fontsize=8, bbox_to_anchor=(0.5, -0.02))
     fig.suptitle(f"Pretrained MAT vs scratch MAT at the released architecture (42M parameters): fold 0 of "
-                 f"{n_runs} seed{'s' if n_runs != 1 else ''}; Wilcoxon p shown when n ≥ 2",
+                 f"{n_runs} seed{'s' if n_runs != 1 else ''}, mean and 95% CI; paired t-test p shown when n ≥ 2",
                  fontsize=11, fontweight="bold", x=0.01, ha="left")
     fig.tight_layout(rect=(0, 0.05, 1, 1))
     return _save(fig, out)

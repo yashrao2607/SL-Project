@@ -1,0 +1,13 @@
+task,split,layer,atom_class,mean_attention_received,n_molecules
+esol,scaffold,0,aromatic,0.055922601372003555,253
+esol,scaffold,0,heteroatom,0.1823333352804184,226
+esol,scaffold,0,ring,0.055922601372003555,253
+esol,scaffold,0,halogen,0.15113581717014313,108
+esol,scaffold,0,carbon_aliphatic,0.03501502424478531,173
+esol,scaffold,0,dummy,0.17020249366760254,253
+esol,scaffold,1,aromatic,0.0807143822312355,253
+esol,scaffold,1,heteroatom,0.027626801282167435,226
+esol,scaffold,1,ring,0.0807143822312355,253
+esol,scaffold,1,halogen,0.007378769107162952,108
+esol,scaffold,1,carbon_aliphatic,0.0840454027056694,173
+esol,scaffold,1,dummy,0.25870898365974426,253

@@ -1,0 +1,20 @@
+{
+  "bonded_share": 0.09004313498735428,
+  "self_share": 0.04250373238550749,
+  "dummy_share": 0.04250373238550749,
+  "test_metrics": {
+    "roc_auc": 0.9186931348221671,
+    "pr_auc": 0.9749453844786526,
+    "f1": 0.9248366013071896
+  },
+  "n_test_molecules": 388,
+  "config": {
+    "N": 2,
+    "batch_size": 64,
+    "d_model": 128,
+    "distance_matrix_kernel": "softmax",
+    "dropout": 0.1,
+    "h": 4,
+    "lr": 0.0005
+  }
+}

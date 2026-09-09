@@ -9,6 +9,7 @@ interruption.
 from __future__ import annotations
 
 import argparse
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -17,9 +18,12 @@ ROOT = Path(__file__).resolve().parent
 PY = sys.executable
 
 
+ENV = dict(os.environ)
+
+
 def run(cmd: list[str]):
     print("\n$", " ".join(cmd), flush=True)
-    r = subprocess.run(cmd, cwd=ROOT)
+    r = subprocess.run(cmd, cwd=ROOT, env=ENV)
     if r.returncode != 0:
         sys.exit(f"step failed: {' '.join(cmd)}")
 
@@ -31,6 +35,9 @@ def main():
     ap.add_argument("--threads", type=int, default=1)
     ap.add_argument("--skip-tier2", action="store_true", help="skip the 42M-parameter pretrained-vs-scratch runs")
     args = ap.parse_args()
+    if args.smoke:
+        ENV["MOLBENCH_RESULTS_DIR"] = "results_smoke"     # never mixes smoke rows into the real results/
+        print("smoke mode: outputs go to results_smoke/", flush=True)
     run([PY, "-m", "pytest", "tests", "-q"])
     run([PY, "scripts/01_prepare_data.py", "--jobs", str(max(1, args.workers))])
     if args.smoke:

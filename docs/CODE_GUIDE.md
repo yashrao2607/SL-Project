@@ -132,6 +132,8 @@ The authors' original `transformer.py`, `utils.py`, `data_utils.py`, `EXAMPLE.ip
 | `08_report.py` | 4.4 | everything in `results/` | `reports/REPORT.md`, `report_numbers.json` | no hand-typed numbers |
 | `verify_report.py` | 4.4 | raw runs, report numbers | `reports/VERIFICATION.md` | independent recomputation; non-zero exit on failure |
 | `make_colab_bundle.py` | 3.4 | code + processed data | `molbench_colab_bundle.zip` | input for `notebooks/colab_tier2.ipynb` |
+| `fetch_kaggle_results.py` | 3.3/3.4 | `kaggle/output/*/` | merged `results/raw/tier1_runs.csv`, `tier2_runs.csv`, canonical `best_configs.json` | de-duplicates by run key, adopts Kaggle's tuning choice for the tasks it ran, drops rows trained under a non-canonical configuration; `--no-fetch` merges local copies only (also `kaggle/output/colab_*/`) |
+| `finalize.sh` | 4.x | everything | statistics, attention, figures, report, verification | one command after all runs exist |
 
 ---
 
@@ -149,11 +151,28 @@ Run with `python -m pytest tests -q` (about 30 s).
 
 ---
 
-## `notebooks/colab_tier2.ipynb`
+## `run_local_share.bat`, `run_pipeline.sh`
+
+`run_local_share.bat` runs the laptop's share of Tier 1 task by task (`03_run_tier1.py --tasks ... --workers 10`) so that the Kaggle notebooks and the laptop never duplicate work by design; `run_pipeline.sh` is the single-machine chain from tuning to verification.
+
+## `notebooks/colab_tier2.ipynb`, `notebooks/make_colab_tier1.py`
+
+`colab_tier2.ipynb` reproduces Tier 2 on a Colab GPU from the bundle zip. `make_colab_tier1.py --name X --tasks ...` generates `colab_tier1_X.ipynb`, a Colab notebook that downloads the private Kaggle bundle with the user's own `kaggle.json`, runs a Tier-1 task share on the Colab GPU and returns a `tier1_runs.csv` to drop into `kaggle/output/colab_X/` for the merge.
 
 GPU notebook for the full 5-seed pretrained-vs-scratch protocol: checks the GPU, installs RDKit/PyG, unzips the bundle, installs `molbench`, downloads the checkpoint, runs the fidelity tests, runs `04_run_tier2.py` with `MOLBENCH_DEVICE=cuda`, and downloads `tier2_runs.csv`. No credentials required.
 
 ---
+
+## `kaggle/`
+
+| Item | What | Why | Use case |
+|---|---|---|---|
+| `kaggle/make_kernel.py` | Generates `kaggle/kernel/sl-project.ipynb` and `kernel-metadata.json` (GPU T4 x2, internet on, dataset source `molbench-bundle`) | The 42M-parameter Tier 2 protocol needs a GPU; Kaggle runs it unattended and stores the output | `python kaggle/make_kernel.py && kaggle kernels push -p kaggle/kernel` |
+| `kaggle/kernel/` | The pushed notebook and metadata | Provenance of the Tier 2 numbers | Inspect / re-push |
+| `kaggle/stage_dataset.sh` | Stages the current project tree (code, processed data, splits, feature cache, tuning table, checkpoint) in a fresh folder and uploads a new version of the private dataset `molbench-bundle` | The notebooks must see the same data and the same frozen configurations as the laptop | `bash kaggle/stage_dataset.sh "message"` (needs the Kaggle CLI on PATH and UTF-8 console) |
+| `kaggle/scheduler.py` | Detached queue manager: keeps the account's 2 GPU sessions busy, waits until a new dataset version lists `best_configs.json` before pushing, re-pushes failed kernels, fetches outputs into `kaggle/output/<slug>/` | Kaggle allows only 2 concurrent GPU sessions per account | `python kaggle/scheduler.py --all <slugs> --queue <slugs> --assume-staged` |
+| `kaggle/output/<slug>/` (git-ignored) | Downloaded kernel outputs: `tier1_runs.csv` / `tier2_runs.csv`, per-split CSVs and logs, `progress.txt`, `error.txt`, `best_configs.json` | Provenance and the input of the merge step | read by `scripts/fetch_kaggle_results.py` |
+| `kaggle/dataset_*/` (git-ignored) | Staging folders created by `stage_dataset.sh` | – | delete when no longer needed |
 
 ## `results/` and `reports/`
 

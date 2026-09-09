@@ -17,11 +17,11 @@ def resolve_config(best: dict, model: str, task: str, split: str) -> dict:
     return best[fam][task][split]
 
 
-def build_jobs(models, tasks, best, max_epochs, patience, seeds=C.SEEDS, folds=range(C.N_FOLDS)):
+def build_jobs(models, tasks, best, max_epochs, patience, seeds=C.SEEDS, folds=range(C.N_FOLDS), splits=C.SPLITS):
     jobs = []
     for model in models:
         for task in tasks:
-            for split in C.SPLITS:
+            for split in splits:
                 cfg = resolve_config(best, model, task, split)
                 for seed in seeds:
                     for fold in folds:
@@ -38,12 +38,14 @@ def main():
     ap.add_argument("--threads", type=int, default=1)
     ap.add_argument("--max-epochs", type=int, default=60)
     ap.add_argument("--patience", type=int, default=10)
+    ap.add_argument("--splits", nargs="+", default=C.SPLITS)
+    ap.add_argument("--out", default=None, help="output CSV (default results/raw/tier1_runs.csv)")
     args = ap.parse_args()
     C.ensure_dirs()
     best = json.loads((C.RESULTS_TUNING / "best_configs.json").read_text())
-    jobs = build_jobs(args.models, args.tasks, best, args.max_epochs, args.patience)
+    jobs = build_jobs(args.models, args.tasks, best, args.max_epochs, args.patience, splits=args.splits)
     jobs.sort(key=lambda j: (j["model"] not in ("rf", "svm"), j["task"], j["split"], j["seed"], j["fold"]))
-    run_grid(jobs, C.RESULTS_RAW / "tier1_runs.csv", workers=args.workers, threads=args.threads)
+    run_grid(jobs, args.out or (C.RESULTS_RAW / "tier1_runs.csv"), workers=args.workers, threads=args.threads)
 
 
 if __name__ == "__main__":

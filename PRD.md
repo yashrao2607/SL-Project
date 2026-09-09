@@ -95,9 +95,9 @@ Each model family is tuned on the validation set of seed 42, fold 0, separately 
 | Tier | Models | Protocol | Runs |
 |---|---|---|---|
 | 1 (full) | RF, SVM/SVR, GCN, MAT, 3 ablations, hybrid | 5 seeds × 5 folds × 2 splits × 7 tasks | 8 × 350 = 2800 |
-| 2 (reduced, 42M-parameter model) | pretrained MAT, scratch MAT at pretrained size | 5 seeds × fold 0 × 2 splits × 7 tasks on a GPU (`notebooks/colab_tier2.ipynb`); locally (CPU, ~4 min per epoch) seed 42 × fold 0 × 2 splits × 7 tasks | 140 (GPU) / 28 (local CPU) |
+| 2 (42M-parameter model) | pretrained MAT, scratch MAT at pretrained size | 5 seeds × fold 0 × 2 splits × 7 tasks on Kaggle T4 GPUs (`kaggle/`), or Colab (`notebooks/colab_tier2.ipynb`); CPU fallback seed 42 only | 140 (GPU) |
 
-Measured on the execution machine: one epoch of the 42M-parameter model takes about 4 minutes with 8 threads, so the local Tier 2 is limited to seed 42; the notebook reproduces the 5-seed protocol on a free Colab GPU in about an hour. Nothing in Tier 1 is reduced. Deep models train for at most 60 epochs with early-stopping patience 10 (validation primary metric); parallel execution uses 14 single-thread workers.
+Execution record (9 Sep 2026): one epoch of the 42M-parameter model takes about 4 minutes on the laptop CPU, so Tier 2 was executed on Kaggle (2 × T4, kernel `dipurao/sl-project`, one GPU per split type) with the full 5-seed protocol: 140 runs in 80 minutes, no failures. Tier 1 was executed on the laptop (10–14 single-thread CPU workers) and on Kaggle T4 notebooks (one or two tasks per notebook, all eight models); the `device` column of `results/raw/tier1_runs.csv` records where each run executed and the frozen configurations are identical everywhere because every machine selects from the same tuning table. Nothing in Tier 1 is reduced. Deep models train for at most 60 epochs with early-stopping patience 10 (validation primary metric). The `--local` option of `scripts/04_run_tier2.py` (seed 42, 8 epochs) remains as a CPU-only fallback.
 
 ### 3.4 Metrics and statistics
 

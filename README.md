@@ -64,7 +64,7 @@ One command reproduces everything (the order is tests → data → tuning → Ti
 
 ```bash
 python run_all.py                 # full protocol; several hours on a 16-core CPU (see timings below)
-python run_all.py --smoke         # end-to-end check on FreeSolv with tiny budgets (~10 minutes)
+python run_all.py --smoke         # end-to-end check on FreeSolv with tiny budgets (~20 minutes); writes to results_smoke/, never to results/
 python run_all.py --skip-tier2    # everything except the 42M-parameter pretrained-vs-scratch runs
 ```
 
@@ -76,8 +76,8 @@ Individual steps:
 |---|---|---|---|
 | Phase 1 | `python scripts/01_prepare_data.py --jobs 12` | `data/processed/*.csv`, `splits/*.json`, `features/mol_cache.pkl`, `cleaning_log.json` | 6 min |
 | 3.2 tuning | `python scripts/02_tune.py` | `results/tuning/tuning_runs.csv`, `best_configs.json/csv` | 25 min |
-| 3.3 Tier 1 | `python scripts/03_run_tier1.py` | `results/raw/tier1_runs.csv` (2800 rows) | 4–7 h (14 workers) |
-| 3.4 Tier 2 | `python scripts/04_run_tier2.py --local` | `results/raw/tier2_runs.csv` | ~4 h (CPU, seed 42) or ~1 h for all 5 seeds on a Colab GPU |
+| 3.3 Tier 1 | `python scripts/03_run_tier1.py` | `results/raw/tier1_runs.csv` (2800 rows) | several hours on 14 CPU workers; split across Kaggle T4 notebooks with `--tasks` (see `kaggle/`) |
+| 3.4 Tier 2 | `python scripts/04_run_tier2.py` (GPU) or `--local` (CPU fallback, seed 42) | `results/raw/tier2_runs.csv` | 80 min for all 140 runs on Kaggle 2 × T4; ~4 h on CPU for seed 42 only |
 | 4.1 statistics | `python scripts/05_stats.py` | `results/summary/*.csv`, `results/stats/*.csv` | seconds |
 | 4.2 attention | `python scripts/06_attention.py` | `results/attention/*`, `results/checkpoints/*.pt` | 10 min |
 | 4.3 figures | `python scripts/07_figures.py` | `results/figures/*.png` | seconds |
@@ -85,7 +85,37 @@ Individual steps:
 
 Useful options: `--workers N --threads T` on the tuning/Tier-1 scripts (default 14 × 1), `--models`, `--tasks` to run subsets, `--max-epochs`, `--patience`.
 
-### Tier 2 on a Colab GPU (recommended for the full 5-seed protocol)
+### Tier 2 on a Kaggle GPU (what produced the reported Tier 2 numbers)
+
+The reported pretrained-vs-scratch results were produced on Kaggle (2 x T4) from the private dataset
+`dipurao/molbench-bundle` (project code + processed data + splits + feature cache + the authors' checkpoint) and the
+kernel `dipurao/sl-project`. To reproduce with your own Kaggle account (needs `~/.kaggle/kaggle.json`):
+
+```bash
+pip install kaggle
+# 1. stage and upload the bundle as a private dataset (edit the "id" in kaggle/dataset/dataset-metadata.json)
+python scripts/01_prepare_data.py            # if data/processed is not present yet
+mkdir -p kaggle/dataset/project/data kaggle/dataset/weights
+cp -r src scripts tests reference pyproject.toml requirements.txt PRD.md kaggle/dataset/project/
+cp -r data/processed kaggle/dataset/project/data/processed
+cp data/pretrained/mat_pretrained_weights.pt kaggle/dataset/weights/
+kaggle datasets create -p kaggle/dataset --dir-mode zip
+# 2. generate and push the notebook (edit the ids in kaggle/make_kernel.py), then poll and fetch the output
+python kaggle/make_kernel.py && kaggle kernels push -p kaggle/kernel
+kaggle kernels status <user>/sl-project
+kaggle kernels output <user>/sl-project -p kaggle/output && cp kaggle/output/tier2_runs.csv results/raw/
+python scripts/05_stats.py && python scripts/07_figures.py && python scripts/08_report.py && python scripts/verify_report.py
+```
+
+The notebook runs the fidelity tests first, then `scripts/04_run_tier2.py` twice in parallel (`--splits random` on GPU 0,
+`--splits scaffold` on GPU 1), and merges the two CSVs into `tier2_runs.csv` (80 minutes on 2 × T4).
+
+Tier 1 can be split across Kaggle notebooks in the same way (`python kaggle/make_kernel.py --kind tier1 --slug <slug> --title <slug> --tasks <tasks>`);
+each notebook first completes any missing hyperparameter-search rows for its tasks on the GPU (resume-safe against the
+uploaded tuning table) and then runs all eight models for those tasks. `kaggle/scheduler.py` keeps the account's two GPU
+slots busy and downloads outputs; `scripts/fetch_kaggle_results.py` merges everything into `results/raw/` by run key.
+
+### Tier 2 on a Colab GPU (alternative)
 
 The 42M-parameter model needs about four minutes per epoch on this CPU, so the local run covers seed 42 only. For the full protocol:
 
@@ -121,7 +151,8 @@ SL Project/
 │   └── plotting.py                   figures
 ├── scripts/                          numbered pipeline steps 01–08, verify_report.py, make_colab_bundle.py
 ├── tests/                            pytest suite (fidelity, models, data, engine, statistics)
-├── notebooks/colab_tier2.ipynb       GPU notebook for the pretrained-vs-scratch runs
+├── notebooks/colab_tier2.ipynb       Colab GPU notebook for the pretrained-vs-scratch runs
+├── kaggle/                           Kaggle route: make_kernel.py (notebook + metadata generator), kernel/ (pushed notebook)
 ├── reference/mat_original/           authors' MAT source (fidelity test only)
 ├── data/                             raw (verbatim), processed (cleaned, splits, features), pretrained
 ├── results/                          tuning, raw, summary, stats, attention, figures, checkpoints

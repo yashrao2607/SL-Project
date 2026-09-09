@@ -276,6 +276,8 @@ def main():
         L.append("## 7. Pretrained MAT versus scratch MAT (Tier 2, released architecture: 8 layers, d_model 1024, 16 heads, 42 M parameters)\n")
         n2 = len(runs2)
         NUMBERS["n_tier2_runs"] = n2
+        L.append("Note on the tests: with n = 5 paired seeds the two-sided Wilcoxon signed-rank test cannot go below p = 0.0625, "
+                 "so it can never reach the 0.05 threshold in this section; the paired t-test is the informative test here.\n")
         L.append(f"Protocol: fold 0 of every seed, both split types, {int(runs2['max_epochs'].max())} epochs maximum with early stopping "
                  f"(patience {int(runs2['patience'].max())}), identical for both variants; {n2} runs. The pretrained variant "
                  "loads the authors' released checkpoint (all encoder weights, the pretraining head is discarded); the "
@@ -303,11 +305,14 @@ def main():
             sub = pvs[pvs["split"] == split]
             sub = sub[sub.apply(lambda q: q["metric"] == primary(q["task"]), axis=1)]
             wins = int((~sub["reference_better"]).sum())
-            sig = int(((~sub["reference_better"]) & (sub["wilcoxon_p"] < 0.05)).sum())
+            sig_t = int(((~sub["reference_better"]) & (sub["t_p"] < 0.05)).sum())
+            sig_w = int(((~sub["reference_better"]) & (sub["wilcoxon_p"] < 0.05)).sum())
             NUMBERS[f"t2_pre_wins_{split}"] = wins
-            NUMBERS[f"t2_pre_sig_{split}"] = sig
+            NUMBERS[f"t2_pre_sig_t_{split}"] = sig_t
+            NUMBERS[f"t2_pre_sig_{split}"] = sig_w
             L.append(f"- {split}: pretraining improves the point estimate on {wins}/{len(sub)} tasks"
-                     + (f", significantly on {sig}/{len(sub)} (Wilcoxon, n = {n2s})." if n2s >= 2 else
+                     + (f", significantly on {sig_t}/{len(sub)} by the paired t-test and {sig_w}/{len(sub)} by Wilcoxon (n = {n2s} seeds)."
+                        if n2s >= 2 else
                         f" (single seed locally; significance requires the 5-seed GPU protocol in notebooks/colab_tier2.ipynb)."))
         L.append("\nLarge models versus the small scratch MAT of Tier 1 on the same fold-0 partitions (paired over 5 seeds):\n")
         rows = []
@@ -398,8 +403,12 @@ def main():
     L.append("## 12. Reproducibility\n")
     wall = runs1["wall_time_s"].sum() / 3600
     NUMBERS["tier1_cpu_hours"] = round(float(wall), 2)
-    L.append(f"- Tier 1: {n_runs} runs, {wall:.1f} CPU-hours of model fitting (sum of per-run wall time; runs executed in parallel).\n"
-             f"- Environment: {open(C.ROOT / 'requirements.txt').read().splitlines()[0].lstrip('# ')}; exact versions in `requirements.txt`.\n"
+    dev = runs1["device"].fillna("cpu").value_counts().to_dict() if "device" in runs1 else {}
+    dev_txt = ", ".join(f"{v} on {k}" for k, v in dev.items())
+    L.append(f"- Tier 1: {n_runs} runs ({dev_txt}), {wall:.1f} hours of model fitting summed over runs (executed in parallel on the "
+             "laptop's 14 CPU workers and on Kaggle T4 GPUs; the `device` column of `results/raw/tier1_runs.csv` records where each run executed).\n"
+             "- Environment: Python 3.11.9 on Windows 11 (laptop, CPU) and the Kaggle Python image with CUDA (T4 GPUs); "
+             "exact package versions used locally are pinned in `requirements.txt`; the `torch_version` column of the run CSVs records the GPU side.\n"
              "- Re-run everything with `python run_all.py`; individual steps are the numbered scripts in `scripts/`.\n")
 
     (C.REPORTS / "REPORT.md").write_text("\n".join(L), encoding="utf-8")

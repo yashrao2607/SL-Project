@@ -1,0 +1,63 @@
+[grid] 332 jobs, 288 done, 44 to run, workers=14 threads=1
+[grid] 10/44 done, 10.5 min elapsed, eta 35.7 min
+[grid] 20/44 done, 17.6 min elapsed, eta 21.1 min
+[grid] 30/44 done, 25.6 min elapsed, eta 11.9 min
+[grid] 40/44 done, 32.1 min elapsed, eta 3.2 min
+[grid] 44/44 done, 34.2 min elapsed, eta 0.0 min
+   family            task     split  n_configs  val_roc_auc                                                                                                                 config  val_rmse
+0      rf            bbbp    random          8     0.941779                       {"class_weight": "balanced", "max_features": "sqrt", "min_samples_leaf": 1, "n_estimators": 500}       NaN
+1      rf            bbbp  scaffold          8     0.897059                       {"class_weight": "balanced", "max_features": "sqrt", "min_samples_leaf": 1, "n_estimators": 500}       NaN
+2      rf            esol    random          4          NaN                                                      {"max_features": 0.3, "min_samples_leaf": 1, "n_estimators": 500}  0.609885
+3      rf            esol  scaffold          4          NaN                                                      {"max_features": 0.3, "min_samples_leaf": 1, "n_estimators": 500}  0.514184
+4      rf        freesolv    random          4          NaN                                                      {"max_features": 0.3, "min_samples_leaf": 3, "n_estimators": 500}  0.866699
+5      rf        freesolv  scaffold          4          NaN                                                      {"max_features": 0.3, "min_samples_leaf": 1, "n_estimators": 500}  0.459331
+6      rf  estrogen-alpha    random          8     0.979798                             {"class_weight": null, "max_features": "sqrt", "min_samples_leaf": 3, "n_estimators": 500}       NaN
+7      rf  estrogen-alpha  scaffold          8     0.968410                             {"class_weight": null, "max_features": "sqrt", "min_samples_leaf": 3, "n_estimators": 500}       NaN
+8      rf   estrogen-beta    random          8     0.964466                          {"class_weight": "balanced", "max_features": 0.3, "min_samples_leaf": 1, "n_estimators": 500}       NaN
+9      rf   estrogen-beta  scaffold          8     0.936892                       {"class_weight": "balanced", "max_features": "sqrt", "min_samples_leaf": 1, "n_estimators": 500}       NaN
+10     rf    metstab-high    random          8     0.923103                             {"class_weight": null, "max_features": "sqrt", "min_samples_leaf": 1, "n_estimators": 500}       NaN
+11     rf    metstab-high  scaffold          8     0.916552                          {"class_weight": "balanced", "max_features": 0.3, "min_samples_leaf": 3, "n_estimators": 500}       NaN
+12     rf     metstab-low    random          8     0.846412                                {"class_weight": null, "max_features": 0.3, "min_samples_leaf": 3, "n_estimators": 500}       NaN
+13     rf     metstab-low  scaffold          8     0.899492                                {"class_weight": null, "max_features": 0.3, "min_samples_leaf": 3, "n_estimators": 500}       NaN
+14    svm            bbbp    random          6     0.956532                                                                                {"C": 10.0, "class_weight": "balanced"}       NaN
+15    svm            bbbp  scaffold          6     0.886776                                                                                 {"C": 1.0, "class_weight": "balanced"}       NaN
+16    svm            esol    random          9          NaN                                                                                           {"C": 10.0, "epsilon": 0.05}  0.578625
+17    svm            esol  scaffold          9          NaN                                                                                           {"C": 10.0, "epsilon": 0.05}  0.463515
+18    svm        freesolv    random          9          NaN                                                                                           {"C": 10.0, "epsilon": 0.05}  0.787135
+19    svm        freesolv  scaffold          9          NaN                                                                                           {"C": 10.0, "epsilon": 0.05}  0.303178
+20    svm  estrogen-alpha    random          6     0.974585                                                                                       {"C": 1.0, "class_weight": null}       NaN
+21    svm  estrogen-alpha  scaffold          6     0.974837                                                                                 {"C": 1.0, "class_weight": "balanced"}       NaN
+22    svm   estrogen-beta    random          6     0.961022                                                                                 {"C": 1.0, "class_weight": "balanced"}       NaN
+23    svm   estrogen-beta  scaffold          6     0.947222                                                                                 {"C": 1.0, "class_weight": "balanced"}       NaN
+24    svm    metstab-high    random          6     0.878276                                                                                 {"C": 1.0, "class_weight": "balanced"}       NaN
+25    svm    metstab-high  scaffold          6     0.892759                                                                                 {"C": 1.0, "class_weight": "balanced"}       NaN
+26    svm     metstab-low    random          6     0.845816                                                                                {"C": 10.0, "class_weight": "balanced"}       NaN
+27    svm     metstab-low  scaffold          6     0.897103                                                                                       {"C": 1.0, "class_weight": null}       NaN
+28    gcn            bbbp    random          4     0.942117                                          {"batch_size": 64, "dropout": 0.1, "hidden": 128, "lr": 0.001, "n_layers": 2}       NaN
+29    gcn            bbbp  scaffold          4     0.898496                                           {"batch_size": 64, "dropout": 0.1, "hidden": 64, "lr": 0.001, "n_layers": 3}       NaN
+30    gcn            esol    random          4          NaN                                           {"batch_size": 64, "dropout": 0.1, "hidden": 64, "lr": 0.001, "n_layers": 3}  0.562237
+31    gcn            esol  scaffold          4          NaN                                          {"batch_size": 64, "dropout": 0.1, "hidden": 128, "lr": 0.001, "n_layers": 3}  0.411228
+32    gcn        freesolv    random          4          NaN                                          {"batch_size": 64, "dropout": 0.1, "hidden": 128, "lr": 0.001, "n_layers": 3}  0.429460
+33    gcn        freesolv  scaffold          4          NaN                                          {"batch_size": 64, "dropout": 0.1, "hidden": 128, "lr": 0.001, "n_layers": 2}  0.360265
+34    gcn  estrogen-alpha    random          4     0.982296                                           {"batch_size": 64, "dropout": 0.1, "hidden": 64, "lr": 0.001, "n_layers": 3}       NaN
+35    gcn  estrogen-alpha  scaffold          4     0.986057                                          {"batch_size": 64, "dropout": 0.1, "hidden": 128, "lr": 0.001, "n_layers": 2}       NaN
+36    gcn   estrogen-beta    random          4     0.957325                                          {"batch_size": 64, "dropout": 0.1, "hidden": 128, "lr": 0.001, "n_layers": 3}       NaN
+37    gcn   estrogen-beta  scaffold          4     0.955208                                          {"batch_size": 64, "dropout": 0.1, "hidden": 128, "lr": 0.001, "n_layers": 3}       NaN
+38    gcn    metstab-high    random          4     0.859655                                          {"batch_size": 64, "dropout": 0.1, "hidden": 128, "lr": 0.001, "n_layers": 3}       NaN
+39    gcn    metstab-high  scaffold          4     0.822069                                           {"batch_size": 64, "dropout": 0.1, "hidden": 64, "lr": 0.001, "n_layers": 3}       NaN
+40    gcn     metstab-low    random          4     0.815590                                          {"batch_size": 64, "dropout": 0.1, "hidden": 128, "lr": 0.001, "n_layers": 2}       NaN
+41    gcn     metstab-low  scaffold          4     0.868578                                          {"batch_size": 64, "dropout": 0.1, "hidden": 128, "lr": 0.001, "n_layers": 2}       NaN
+42    mat            bbbp    random          6     0.905856    {"N": 4, "batch_size": 64, "d_model": 64, "distance_matrix_kernel": "softmax", "dropout": 0.1, "h": 4, "lr": 0.001}       NaN
+43    mat            bbbp  scaffold          6     0.921274  {"N": 2, "batch_size": 64, "d_model": 128, "distance_matrix_kernel": "softmax", "dropout": 0.1, "h": 4, "lr": 0.0005}       NaN
+44    mat            esol    random          6          NaN    {"N": 4, "batch_size": 64, "d_model": 64, "distance_matrix_kernel": "softmax", "dropout": 0.1, "h": 4, "lr": 0.001}  0.401502
+45    mat            esol  scaffold          6          NaN   {"N": 2, "batch_size": 64, "d_model": 128, "distance_matrix_kernel": "softmax", "dropout": 0.1, "h": 4, "lr": 0.001}  0.338905
+46    mat        freesolv    random          6          NaN   {"N": 4, "batch_size": 64, "d_model": 64, "distance_matrix_kernel": "softmax", "dropout": 0.1, "h": 4, "lr": 0.0005}  0.359860
+47    mat        freesolv  scaffold          6          NaN   {"N": 2, "batch_size": 64, "d_model": 128, "distance_matrix_kernel": "softmax", "dropout": 0.1, "h": 4, "lr": 0.001}  0.197709
+48    mat  estrogen-alpha    random          6     0.978820  {"N": 2, "batch_size": 64, "d_model": 128, "distance_matrix_kernel": "softmax", "dropout": 0.1, "h": 4, "lr": 0.0005}       NaN
+49    mat  estrogen-alpha  scaffold          6     0.974946   {"N": 2, "batch_size": 64, "d_model": 128, "distance_matrix_kernel": "softmax", "dropout": 0.1, "h": 4, "lr": 0.001}       NaN
+50    mat   estrogen-beta    random          6     0.949597    {"N": 4, "batch_size": 64, "d_model": 64, "distance_matrix_kernel": "softmax", "dropout": 0.1, "h": 4, "lr": 0.001}       NaN
+51    mat   estrogen-beta  scaffold          6     0.931771   {"N": 4, "batch_size": 64, "d_model": 64, "distance_matrix_kernel": "softmax", "dropout": 0.1, "h": 4, "lr": 0.0005}       NaN
+52    mat    metstab-high    random          6     0.909655  {"N": 2, "batch_size": 64, "d_model": 128, "distance_matrix_kernel": "softmax", "dropout": 0.1, "h": 4, "lr": 0.0005}       NaN
+53    mat    metstab-high  scaffold          6     0.832759   {"N": 2, "batch_size": 64, "d_model": 64, "distance_matrix_kernel": "softmax", "dropout": 0.1, "h": 4, "lr": 0.0005}       NaN
+54    mat     metstab-low    random          6     0.814324   {"N": 4, "batch_size": 64, "d_model": 64, "distance_matrix_kernel": "softmax", "dropout": 0.1, "h": 4, "lr": 0.0005}       NaN
+55    mat     metstab-low  scaffold          6     0.875448  {"N": 2, "batch_size": 64, "d_model": 128, "distance_matrix_kernel": "softmax", "dropout": 0.1, "h": 4, "lr": 0.0005}       NaN

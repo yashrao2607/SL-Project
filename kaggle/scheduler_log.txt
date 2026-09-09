@@ -1,0 +1,239 @@
+03:33:20 start; already pushed: ['sl-project', 'sl-project-t1a']
+03:33:48 status {"sl-project": "RUNNING", "sl-project-t1a": "ERROR", "sl-project-t1b": "NOT_PUSHED", "sl-project-t1c": "NOT_PUSHED", "sl-project-t1d": "NOT_PUSHED"} active=1
+03:33:55 fetched sl-project-t1a (ERROR): exit 1; files: ['progress.txt', 'sl-project-t1a.log']
+03:33:55 sl-project-t1a progress tail: 22:00:36 notebook started
+03:33:55 sl-project-t1a ERROR details: no error.txt
+03:36:27 status {"sl-project": "RUNNING", "sl-project-t1a": "ERROR", "sl-project-t1b": "NOT_PUSHED", "sl-project-t1c": "NOT_PUSHED", "sl-project-t1d": "NOT_PUSHED"} active=1
+03:38:48 status {"sl-project": "RUNNING", "sl-project-t1a": "ERROR", "sl-project-t1b": "NOT_PUSHED", "sl-project-t1c": "NOT_PUSHED", "sl-project-t1d": "NOT_PUSHED"} active=1
+03:41:11 status {"sl-project": "RUNNING", "sl-project-t1a": "RUNNING", "sl-project-t1b": "NOT_PUSHED", "sl-project-t1c": "NOT_PUSHED", "sl-project-t1d": "NOT_PUSHED"} active=2
+03:43:30 status {"sl-project": "RUNNING", "sl-project-t1a": "RUNNING", "sl-project-t1b": "NOT_PUSHED", "sl-project-t1c": "NOT_PUSHED", "sl-project-t1d": "NOT_PUSHED"} active=2
+03:45:46 status {"sl-project": "RUNNING", "sl-project-t1a": "RUNNING", "sl-project-t1b": "NOT_PUSHED", "sl-project-t1c": "NOT_PUSHED", "sl-project-t1d": "NOT_PUSHED"} active=2
+03:46:21 start; already pushed: ['sl-project', 'sl-project-t1a']
+03:46:27 status {"sl-project": "RUNNING", "sl-project-t1a": "RUNNING", "sl-project-t1d": "NOT_PUSHED"} active=2
+03:48:32 status {"sl-project": "RUNNING", "sl-project-t1a": "RUNNING", "sl-project-t1d": "NOT_PUSHED"} active=2
+03:50:46 status {"sl-project": "RUNNING", "sl-project-t1a": "RUNNING", "sl-project-t1d": "NOT_PUSHED"} active=2
+03:53:00 status {"sl-project": "RUNNING", "sl-project-t1a": "RUNNING", "sl-project-t1d": "NOT_PUSHED"} active=2
+03:53:36 start; already pushed: ['sl-project', 'sl-project-t1a']
+03:53:50 status {"sl-project": "RUNNING", "sl-project-t1a": "RUNNING", "sl-project-t1d": "NOT_PUSHED"} active=2
+03:53:50 local tuning complete -> bash kaggle/stage_dataset.sh 'full local tuning table'
+03:54:51 stage exit 127: reate 'kaggle/dataset/project/
+/pyproject.toml': No such file or directory
+cp: can't create 'kaggle/dataset/project/
+/requirements.txt': No such file or directory
+cp: can't create 'kaggle/dataset/project/
+/PRD.md': No such file or directory
+kaggle/stage_dataset.sh: line 24: kaggle: command not found
+03:57:05 status {"sl-project": "RUNNING", "sl-project-t1a": "ERROR", "sl-project-t1d": "NOT_PUSHED"} active=1
+03:57:05 local tuning complete -> bash kaggle/stage_dataset.sh 'full local tuning table'
+03:57:34 stage exit 127: reate 'kaggle/dataset/project/
+/pyproject.toml': No such file or directory
+cp: can't create 'kaggle/dataset/project/
+/requirements.txt': No such file or directory
+cp: can't create 'kaggle/dataset/project/
+/PRD.md': No such file or directory
+kaggle/stage_dataset.sh: line 24: kaggle: command not found
+03:57:42 fetched sl-project-t1a (ERROR): exit 1; files: ['error.txt', 'progress.txt', 'sl-project-t1a.log']
+03:57:42 sl-project-t1a progress tail: 22:10:13 notebook started | 22:10:26 pip exit 0 | 22:25:47 ERROR dataset input missing
+03:57:42 sl-project-t1a ERROR details: 22:25:47 dataset input missing
+Traceback (most recent call last):
+  File "/tmp/ipykernel_23/2344260771.py", line 12, in <cell line: 0>
+    print(os.listdir(INP))
+          ^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/kaggle/input/molbench-bundle'
+
+
+03:59:57 status {"sl-project": "RUNNING", "sl-project-t1a": "ERROR", "sl-project-t1d": "NOT_PUSHED"} active=1
+03:59:57 local tuning complete -> bash kaggle/stage_dataset.sh 'full local tuning table'
+04:00:31 stage exit 127: reate 'kaggle/dataset/project/
+/pyproject.toml': No such file or directory
+cp: can't create 'kaggle/dataset/project/
+/requirements.txt': No such file or directory
+cp: can't create 'kaggle/dataset/project/
+/PRD.md': No such file or directory
+kaggle/stage_dataset.sh: line 24: kaggle: command not found
+04:01:54 start; already running/complete: ['sl-project']
+04:02:11 status {"sl-project": "RUNNING", "sl-project-t1a": "ERROR", "sl-project-t1d": "NOT_PUSHED"} active=1
+04:02:11 local tuning complete -> bash kaggle/stage_dataset.sh 'full local tuning table'
+04:04:08 scheduler crashed: TypeError: unsupported operand type(s) for +: 'NoneType' and 'NoneType'
+04:29:30 assume-staged: dataset version with tuning table visible: True
+04:29:50 start; already running/complete: ['sl-project']
+04:30:09 status {"sl-project": "RUNNING", "sl-project-t1a": "ERROR", "sl-project-t1d": "NOT_PUSHED", "sl-project-t1b": "NOT_PUSHED"} active=1
+04:30:15 push sl-project-t1a: exit 0: Kernel version 3 successfully pushed.  Please check progress at https://www.kaggle.com/code/dipurao/sl-project-t1a
+04:30:21 fetched sl-project-t1a (ERROR): exit 0; files: ['error.txt', 'progress.txt', 'sl-project-t1a.log']
+04:30:21 sl-project-t1a progress tail: 22:10:13 notebook started | 22:10:26 pip exit 0 | 22:25:47 ERROR dataset input missing
+04:30:21 sl-project-t1a ERROR details: 22:25:47 dataset input missing
+Traceback (most recent call last):
+  File "/tmp/ipykernel_23/2344260771.py", line 12, in <cell line: 0>
+    print(os.listdir(INP))
+          ^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/kaggle/input/molbench-bundle'
+
+
+04:32:41 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "NOT_PUSHED", "sl-project-t1b": "NOT_PUSHED"} active=1
+04:32:47 push sl-project-t1a: exit 0: Kernel version 4 successfully pushed.  Please check progress at https://www.kaggle.com/code/dipurao/sl-project-t1a
+04:33:02 fetched sl-project (COMPLETE): exit 1; files: ['progress.txt', 'sl-project.log', 'tier2_random.csv', 'tier2_random.log', 'tier2_runs.csv', 'tier2_scaffold.csv', 'tier2_scaffold.log']
+04:33:02 sl-project progress tail: 23:01:13 random process exit code 0 | 23:01:13 scaffold process exit code 0 | 23:01:13 merged output written
+04:34:33 assume-staged: dataset version with tuning table visible: True
+04:34:52 start; already running/complete: ['sl-project', 'sl-project-t1a']
+04:35:12 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "NOT_PUSHED", "sl-project-t1b": "NOT_PUSHED"} active=1
+04:35:17 push sl-project-t1d: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+04:35:31 fetched sl-project (COMPLETE): exit 0; files: ['progress.txt', 'sl-project.log', 'tier2_random.csv', 'tier2_random.log', 'tier2_runs.csv', 'tier2_scaffold.csv', 'tier2_scaffold.log']
+04:35:31 sl-project progress tail: 23:01:13 random process exit code 0 | 23:01:13 scaffold process exit code 0 | 23:01:13 merged output written
+04:36:32 assume-staged: dataset version with tuning table visible: True
+04:36:46 start; already running/complete: ['sl-project', 'sl-project-t1a']
+04:37:05 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "NOT_PUSHED", "sl-project-t1b": "NOT_PUSHED", "sl-project-t1c": "NOT_PUSHED"} active=1
+04:37:08 push sl-project-t1d: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+04:37:18 fetched sl-project (COMPLETE): exit 0; files: ['progress.txt', 'sl-project.log', 'tier2_random.csv', 'tier2_random.log', 'tier2_runs.csv', 'tier2_scaffold.csv', 'tier2_scaffold.log']
+04:37:18 sl-project progress tail: 23:01:13 random process exit code 0 | 23:01:13 scaffold process exit code 0 | 23:01:13 merged output written
+04:39:48 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "NOT_PUSHED", "sl-project-t1b": "NOT_PUSHED", "sl-project-t1c": "NOT_PUSHED"} active=1
+04:39:50 push sl-project-t1d: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+04:42:12 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "NOT_PUSHED", "sl-project-t1b": "NOT_PUSHED", "sl-project-t1c": "NOT_PUSHED"} active=1
+04:42:16 push sl-project-t1d: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+04:44:34 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "NOT_PUSHED", "sl-project-t1b": "NOT_PUSHED", "sl-project-t1c": "NOT_PUSHED"} active=1
+04:44:39 push sl-project-t1d: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+04:46:56 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "NOT_PUSHED", "sl-project-t1b": "NOT_PUSHED", "sl-project-t1c": "NOT_PUSHED"} active=1
+04:47:01 push sl-project-t1d: exit 0: Kernel version 1 successfully pushed.  Please check progress at https://www.kaggle.com/code/dipurao/sl-project-t1d
+04:49:18 status {"sl-project": "COMPLETE", "sl-project-t1a": "ERROR", "sl-project-t1d": "RUNNING", "sl-project-t1b": "NOT_PUSHED", "sl-project-t1c": "NOT_PUSHED"} active=1
+04:49:22 push sl-project-t1b: exit 0: Kernel version 1 successfully pushed.  Please check progress at https://www.kaggle.com/code/dipurao/sl-project-t1b
+04:49:27 fetched sl-project-t1a (ERROR): exit 0; files: ['error.txt', 'progress.txt', 'sl-project-t1a.log']
+04:49:27 sl-project-t1a progress tail: 23:03:10 gpus=2 cpus=4 | 23:03:18 pip exit 0 | 23:18:39 ERROR dataset input missing
+04:49:27 sl-project-t1a ERROR details: 22:25:47 dataset input missing
+Traceback (most recent call last):
+  File "/tmp/ipykernel_23/2344260771.py", line 12, in <cell line: 0>
+    print(os.listdir(INP))
+          ^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/kaggle/input/molbench-bundle'
+
+
+04:51:45 status {"sl-project": "COMPLETE", "sl-project-t1a": "ERROR", "sl-project-t1d": "RUNNING", "sl-project-t1b": "RUNNING", "sl-project-t1c": "NOT_PUSHED"} active=2
+04:54:03 status {"sl-project": "COMPLETE", "sl-project-t1a": "ERROR", "sl-project-t1d": "RUNNING", "sl-project-t1b": "RUNNING", "sl-project-t1c": "NOT_PUSHED"} active=2
+04:56:19 status {"sl-project": "COMPLETE", "sl-project-t1a": "ERROR", "sl-project-t1d": "RUNNING", "sl-project-t1b": "RUNNING", "sl-project-t1c": "NOT_PUSHED"} active=2
+04:58:37 status {"sl-project": "COMPLETE", "sl-project-t1a": "ERROR", "sl-project-t1d": "RUNNING", "sl-project-t1b": "RUNNING", "sl-project-t1c": "NOT_PUSHED"} active=2
+05:00:34 assume-staged: dataset version with tuning table visible: True
+05:00:51 start; already running/complete: ['sl-project', 'sl-project-t1b', 'sl-project-t1d']
+05:01:06 status {"sl-project": "COMPLETE", "sl-project-t1a": "ERROR", "sl-project-t1d": "RUNNING", "sl-project-t1b": "RUNNING", "sl-project-t1c": "NOT_PUSHED"} active=2
+05:01:18 fetched sl-project (COMPLETE): exit 0; files: ['progress.txt', 'sl-project.log', 'tier2_random.csv', 'tier2_random.log', 'tier2_runs.csv', 'tier2_scaffold.csv', 'tier2_scaffold.log']
+05:01:18 sl-project progress tail: 23:01:13 random process exit code 0 | 23:01:13 scaffold process exit code 0 | 23:01:13 merged output written
+05:03:33 status {"sl-project": "COMPLETE", "sl-project-t1a": "ERROR", "sl-project-t1d": "RUNNING", "sl-project-t1b": "RUNNING", "sl-project-t1c": "NOT_PUSHED"} active=2
+05:05:50 status {"sl-project": "COMPLETE", "sl-project-t1a": "ERROR", "sl-project-t1d": "RUNNING", "sl-project-t1b": "RUNNING", "sl-project-t1c": "NOT_PUSHED"} active=2
+05:08:08 status {"sl-project": "COMPLETE", "sl-project-t1a": "ERROR", "sl-project-t1d": "RUNNING", "sl-project-t1b": "RUNNING", "sl-project-t1c": "NOT_PUSHED"} active=2
+05:10:26 status {"sl-project": "COMPLETE", "sl-project-t1a": "ERROR", "sl-project-t1d": "RUNNING", "sl-project-t1b": "RUNNING", "sl-project-t1c": "NOT_PUSHED"} active=2
+05:12:42 status {"sl-project": "COMPLETE", "sl-project-t1a": "ERROR", "sl-project-t1d": "RUNNING", "sl-project-t1b": "RUNNING", "sl-project-t1c": "NOT_PUSHED"} active=2
+05:14:59 status {"sl-project": "COMPLETE", "sl-project-t1a": "ERROR", "sl-project-t1d": "RUNNING", "sl-project-t1b": "RUNNING", "sl-project-t1c": "NOT_PUSHED"} active=2
+05:17:20 status {"sl-project": "COMPLETE", "sl-project-t1a": "ERROR", "sl-project-t1d": "RUNNING", "sl-project-t1b": "RUNNING", "sl-project-t1c": "NOT_PUSHED"} active=2
+05:19:41 status {"sl-project": "COMPLETE", "sl-project-t1a": "ERROR", "sl-project-t1d": "RUNNING", "sl-project-t1b": "RUNNING", "sl-project-t1c": "NOT_PUSHED"} active=2
+05:22:00 status {"sl-project": "COMPLETE", "sl-project-t1a": "ERROR", "sl-project-t1d": "RUNNING", "sl-project-t1b": "RUNNING", "sl-project-t1c": "NOT_PUSHED"} active=2
+05:24:16 status {"sl-project": "COMPLETE", "sl-project-t1a": "ERROR", "sl-project-t1d": "RUNNING", "sl-project-t1b": "RUNNING", "sl-project-t1c": "NOT_PUSHED"} active=2
+05:26:34 status {"sl-project": "COMPLETE", "sl-project-t1a": "ERROR", "sl-project-t1d": "RUNNING", "sl-project-t1b": "RUNNING", "sl-project-t1c": "NOT_PUSHED"} active=2
+05:28:52 status {"sl-project": "COMPLETE", "sl-project-t1a": "ERROR", "sl-project-t1d": "RUNNING", "sl-project-t1b": "RUNNING", "sl-project-t1c": "NOT_PUSHED"} active=2
+05:31:11 status {"sl-project": "COMPLETE", "sl-project-t1a": "ERROR", "sl-project-t1d": "RUNNING", "sl-project-t1b": "RUNNING", "sl-project-t1c": "NOT_PUSHED"} active=2
+05:33:28 status {"sl-project": "COMPLETE", "sl-project-t1a": "ERROR", "sl-project-t1d": "RUNNING", "sl-project-t1b": "RUNNING", "sl-project-t1c": "NOT_PUSHED"} active=2
+05:35:49 status {"sl-project": "COMPLETE", "sl-project-t1a": "ERROR", "sl-project-t1d": "RUNNING", "sl-project-t1b": "RUNNING", "sl-project-t1c": "NOT_PUSHED"} active=2
+05:38:09 status {"sl-project": "COMPLETE", "sl-project-t1a": "ERROR", "sl-project-t1d": "RUNNING", "sl-project-t1b": "RUNNING", "sl-project-t1c": "NOT_PUSHED"} active=2
+05:40:29 status {"sl-project": "COMPLETE", "sl-project-t1a": "ERROR", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "RUNNING", "sl-project-t1c": "NOT_PUSHED"} active=1
+05:40:34 push sl-project-t1a: exit 0: Kernel version 5 successfully pushed.  Please check progress at https://www.kaggle.com/code/dipurao/sl-project-t1a
+05:40:37 fetched sl-project-t1a (ERROR): exit 0; files: ['error.txt', 'progress.txt', 'sl-project-t1a.log']
+05:40:37 sl-project-t1a progress tail: 23:03:10 gpus=2 cpus=4 | 23:03:18 pip exit 0 | 23:18:39 ERROR dataset input missing
+05:40:37 sl-project-t1a ERROR details: 22:25:47 dataset input missing
+Traceback (most recent call last):
+  File "/tmp/ipykernel_23/2344260771.py", line 12, in <cell line: 0>
+    print(os.listdir(INP))
+          ^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/kaggle/input/molbench-bundle'
+
+
+05:40:59 fetched sl-project-t1d (COMPLETE): exit 0; files: ['best_configs.json', 'progress.txt', 'sl-project-t1d.log', 'tier1_random.csv', 'tier1_random.log', 'tier1_runs.csv', 'tier1_scaffold.csv', 'tier1_scaffold.log', 'tuning_runs.csv']
+05:40:59 sl-project-t1d progress tail: 00:10:07 random process exit code 0 | 00:10:07 scaffold process exit code 0 | 00:10:07 merged output written
+05:43:17 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "RUNNING", "sl-project-t1c": "NOT_PUSHED"} active=2
+05:45:37 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "RUNNING", "sl-project-t1c": "NOT_PUSHED"} active=2
+05:47:53 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "RUNNING", "sl-project-t1c": "NOT_PUSHED"} active=2
+05:50:10 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=1
+05:50:14 push sl-project-t1a: exit 0: Kernel version 6 successfully pushed.  Please check progress at https://www.kaggle.com/code/dipurao/sl-project-t1a
+05:50:34 fetched sl-project-t1b (COMPLETE): exit 0; files: ['best_configs.json', 'progress.txt', 'sl-project-t1b.log', 'tier1_random.csv', 'tier1_random.log', 'tier1_runs.csv', 'tier1_scaffold.csv', 'tier1_scaffold.log', 'tuning_runs.csv']
+05:50:35 sl-project-t1b progress tail: 00:18:29 random process exit code 0 | 00:18:29 scaffold process exit code 0 | 00:18:29 merged output written
+05:52:52 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=1
+05:52:56 push sl-project-t1c: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+05:55:13 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=1
+05:55:17 push sl-project-t1c: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+05:57:34 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=1
+05:57:37 push sl-project-t1c: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+05:59:55 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=1
+05:59:59 push sl-project-t1c: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+06:02:15 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=1
+06:02:20 push sl-project-t1c: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+06:04:36 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=1
+06:04:41 push sl-project-t1c: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+06:06:57 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=1
+06:07:01 push sl-project-t1c: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+06:09:17 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=1
+06:09:21 push sl-project-t1c: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+06:11:36 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=1
+06:11:39 push sl-project-t1c: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+06:13:57 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=1
+06:14:00 push sl-project-t1c: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+06:16:17 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=1
+06:16:21 push sl-project-t1c: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+06:18:38 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=1
+06:18:41 push sl-project-t1c: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+06:21:00 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=1
+06:21:03 push sl-project-t1c: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+06:23:17 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=1
+06:23:21 push sl-project-t1c: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+06:25:39 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=1
+06:25:43 push sl-project-t1c: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+06:27:59 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=1
+06:28:02 push sl-project-t1c: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+06:30:20 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=1
+06:30:24 push sl-project-t1c: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+06:32:40 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=1
+06:32:45 push sl-project-t1c: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+06:35:00 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=1
+06:35:04 push sl-project-t1c: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+06:37:18 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=1
+06:37:22 push sl-project-t1c: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+06:39:39 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=1
+06:39:43 push sl-project-t1c: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+06:42:00 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=1
+06:42:04 push sl-project-t1c: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+06:44:21 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=1
+06:44:25 push sl-project-t1c: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+06:46:41 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=1
+06:46:45 push sl-project-t1c: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+06:49:02 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=1
+06:49:05 push sl-project-t1c: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+06:51:23 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=1
+06:51:27 push sl-project-t1c: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+06:53:45 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=1
+06:53:49 push sl-project-t1c: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+06:56:08 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=1
+06:56:13 push sl-project-t1c: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+06:58:28 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=1
+06:58:32 push sl-project-t1c: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+07:00:48 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=1
+07:00:51 push sl-project-t1c: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+07:03:08 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=1
+07:03:12 push sl-project-t1c: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+07:05:27 status {"sl-project": "COMPLETE", "sl-project-t1a": "RUNNING", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=1
+07:05:31 push sl-project-t1c: exit 0: Kernel push error: Maximum batch GPU session count of 2 reached.
+07:07:47 status {"sl-project": "COMPLETE", "sl-project-t1a": "COMPLETE", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "NOT_PUSHED"} active=0
+07:07:52 push sl-project-t1c: exit 0: Kernel version 1 successfully pushed.  Please check progress at https://www.kaggle.com/code/dipurao/sl-project-t1c
+07:08:11 fetched sl-project-t1a (COMPLETE): exit 0; files: ['best_configs.json', 'error.txt', 'progress.txt', 'sl-project-t1a.log', 'tier1_random.csv', 'tier1_random.log', 'tier1_runs.csv', 'tier1_scaffold.csv', 'tier1_scaffold.log', 'tuning_runs.csv']
+07:08:11 sl-project-t1a progress tail: 01:35:32 random process exit code 0 | 01:35:32 scaffold process exit code 0 | 01:35:32 merged output written
+07:10:27 status {"sl-project": "COMPLETE", "sl-project-t1a": "COMPLETE", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "RUNNING"} active=1
+07:12:43 status {"sl-project": "COMPLETE", "sl-project-t1a": "COMPLETE", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "RUNNING"} active=1
+07:15:01 status {"sl-project": "COMPLETE", "sl-project-t1a": "COMPLETE", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "RUNNING"} active=1
+07:17:17 status {"sl-project": "COMPLETE", "sl-project-t1a": "COMPLETE", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "RUNNING"} active=1
+07:19:34 status {"sl-project": "COMPLETE", "sl-project-t1a": "COMPLETE", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "RUNNING"} active=1
+07:21:51 status {"sl-project": "COMPLETE", "sl-project-t1a": "COMPLETE", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "RUNNING"} active=1
+07:24:06 status {"sl-project": "COMPLETE", "sl-project-t1a": "COMPLETE", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "RUNNING"} active=1
+07:26:22 status {"sl-project": "COMPLETE", "sl-project-t1a": "COMPLETE", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "RUNNING"} active=1
+07:28:39 status {"sl-project": "COMPLETE", "sl-project-t1a": "COMPLETE", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "RUNNING"} active=1
+07:30:55 status {"sl-project": "COMPLETE", "sl-project-t1a": "COMPLETE", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "RUNNING"} active=1
+07:33:11 status {"sl-project": "COMPLETE", "sl-project-t1a": "COMPLETE", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "RUNNING"} active=1
+07:35:22 status {"sl-project": "COMPLETE", "sl-project-t1a": "COMPLETE", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "RUNNING"} active=1
+07:37:31 status {"sl-project": "COMPLETE", "sl-project-t1a": "COMPLETE", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "RUNNING"} active=1
+07:39:39 status {"sl-project": "COMPLETE", "sl-project-t1a": "COMPLETE", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "RUNNING"} active=1
+07:41:48 status {"sl-project": "COMPLETE", "sl-project-t1a": "COMPLETE", "sl-project-t1d": "COMPLETE", "sl-project-t1b": "COMPLETE", "sl-project-t1c": "COMPLETE"} active=0
+07:41:58 fetched sl-project-t1c (COMPLETE): exit 0; files: ['best_configs.json', 'progress.txt', 'sl-project-t1c.log', 'tier1_random.csv', 'tier1_random.log', 'tier1_runs.csv', 'tier1_scaffold.csv', 'tier1_scaffold.log', 'tuning_runs.csv']
+07:41:58 sl-project-t1c progress tail: 02:11:08 random process exit code 0 | 02:11:08 scaffold process exit code 0 | 02:11:08 merged output written
+07:41:58 all kernels finished and fetched; exiting

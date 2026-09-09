@@ -4,9 +4,9 @@ from __future__ import annotations
 import csv
 import hashlib
 import json
+import multiprocessing
 import os
 import time
-from multiprocessing import Pool
 
 import pandas as pd
 
@@ -53,22 +53,38 @@ def _init_worker(threads: int):
 
 
 def _task_data(task):
+    """Per-worker task features. The full feature cache (~0.5 GB in memory) is released after the task's
+    subset has been extracted and re-read from disk only when a job for a different task arrives."""
+    global _CACHE
     if task not in _TASK_DATA:
+        if not _CACHE:
+            _CACHE = Fz.load_cache()
+        _TASK_DATA.clear()                     # keep only the current task's molecules in memory
         _TASK_DATA[task] = Fz.task_features(task, _CACHE)
+        _CACHE = {}
+        import gc
+        gc.collect()
     return _TASK_DATA[task]
 
 
 def run_job(job: dict) -> dict:
     """Execute one job dict {model, task, split, seed, fold, config, max_epochs, patience}."""
     global _CACHE
-    if _CACHE is None:                     # sequential (non-pool) use
-        _init_worker(job.get("threads", _THREADS))
-    recs, X_fp, y, ttype = _task_data(job["task"])
-    folds = D.load_splits(job["task"], job["split"], job["seed"])
-    fold = folds[job["fold"]]
     from .engine import DEVICE
     import torch
     chash = job_hash(job)
+    try:
+        if _CACHE is None:                     # sequential (non-pool) use
+            _init_worker(job.get("threads", _THREADS))
+        recs, X_fp, y, ttype = _task_data(job["task"])
+        folds = D.load_splits(job["task"], job["split"], job["seed"])
+        fold = folds[job["fold"]]
+    except Exception as e:  # data loading failure (e.g. transient out-of-memory): report, never kill the grid
+        return {"run_key": run_key(job["model"], job["task"], job["split"], job["seed"], job["fold"], job.get("tag", ""), chash),
+                "tag": job.get("tag", ""), "model": job["model"], "task": job["task"], "task_type": C.TASKS[job["task"]]["type"],
+                "split": job["split"], "seed": job["seed"], "fold": job["fold"], "config": json.dumps(job["config"], sort_keys=True),
+                "cfg_hash": chash, "max_epochs": job.get("max_epochs", 100), "patience": job.get("patience", 15),
+                "device": str(DEVICE), "torch_version": torch.__version__, "error": f"data loading: {type(e).__name__}: {e}"}
     row = {"run_key": run_key(job["model"], job["task"], job["split"], job["seed"], job["fold"], job.get("tag", ""), chash),
            "tag": job.get("tag", ""), "model": job["model"], "task": job["task"], "task_type": ttype, "split": job["split"],
            "seed": job["seed"], "fold": job["fold"], "n_train": len(fold["train"]), "n_val": len(fold["val"]),
@@ -111,7 +127,8 @@ def run_grid(jobs: list[dict], csv_path, workers: int = 8, threads: int = 2, ver
             _init_worker(threads)
             it = map(run_job, todo)
         else:
-            pool = Pool(workers, initializer=_init_worker, initargs=(threads,))
+            # "spawn" on every platform: workers must not inherit a CUDA context from the parent (fork is unsafe)
+            pool = multiprocessing.get_context("spawn").Pool(workers, initializer=_init_worker, initargs=(threads,))
             it = pool.imap_unordered(run_job, todo)
         for i, row in enumerate(it):
             w.writerow({k: row.get(k, "") for k in ROW_FIELDS})

@@ -1,0 +1,26 @@
+[attention] training MAT on bbbp/scaffold cfg={'N': 2, 'batch_size': 64, 'd_model': 128, 'distance_matrix_kernel': 'softmax', 'dropout': 0.1, 'h': 4, 'lr': 0.0005}
+           bonded_share  self_share  dummy_share  dist_corr_spearman   entropy
+kind                                                                          
+attn           0.329626    0.300225     0.037006            0.604631  2.112313
+self_attn      0.072022    0.043830     0.112139           -0.026409  1.801816
+uniform baseline: {'bonded_share': 0.09, 'self_share': 0.043, 'dummy_share': 0.043}
+[attention] training MAT on bbbp/random cfg={'N': 4, 'batch_size': 64, 'd_model': 64, 'distance_matrix_kernel': 'softmax', 'dropout': 0.1, 'h': 4, 'lr': 0.001}
+           bonded_share  self_share  dummy_share  dist_corr_spearman   entropy
+kind                                                                          
+attn           0.334261    0.301148     0.016313            0.590696  2.014715
+self_attn      0.083513    0.038719     0.049432           -0.065840  1.519908
+uniform baseline: {'bonded_share': 0.098, 'self_share': 0.047, 'dummy_share': 0.047}
+[attention] training MAT on esol/scaffold cfg={'N': 2, 'batch_size': 64, 'd_model': 128, 'distance_matrix_kernel': 'softmax', 'dropout': 0.1, 'h': 4, 'lr': 0.001}
+D:\SL Project\src\molbench\attention.py:93: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+  c = spearmanr(w, inv).correlation
+           bonded_share  self_share  dummy_share  dist_corr_spearman   entropy
+kind                                                                          
+attn           0.348818    0.334870     0.070770            0.696837  1.679130
+self_attn      0.140977    0.082271     0.214456           -0.040474  0.949828
+uniform baseline: {'bonded_share': 0.17, 'self_share': 0.085, 'dummy_share': 0.085}
+[attention] training MAT on esol/random cfg={'N': 4, 'batch_size': 64, 'd_model': 64, 'distance_matrix_kernel': 'softmax', 'dropout': 0.1, 'h': 4, 'lr': 0.001}
+           bonded_share  self_share  dummy_share  dist_corr_spearman   entropy
+kind                                                                          
+attn           0.337780    0.335359     0.107292            0.718480  1.789611
+self_attn      0.119368    0.069081     0.325127           -0.050729  1.389777
+uniform baseline: {'bonded_share': 0.166, 'self_share': 0.088, 'dummy_share': 0.088}

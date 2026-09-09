@@ -65,12 +65,17 @@ def main():
             # example molecules: 6 medium-sized test molecules with the largest |prediction| confidence
             sizes = np.array([it["n"] for it in items])
             cand = np.where((sizes >= 10) & (sizes <= 22))[0][:6]
+            def obj_array(seq):
+                arr = np.empty(len(seq), dtype=object)      # ragged per-molecule arrays, never stacked
+                for k, x in enumerate(seq):
+                    arr[k] = x
+                return arr
             np.savez_compressed(C.RESULTS_ATTENTION / f"{task}_{split}_examples.npz",
                                 smiles=np.array([items[i]["smiles"] for i in cand]),
-                                self_attn=np.array([np.stack(items[i]["self_attn"]) for i in cand], dtype=object),
-                                attn=np.array([np.stack(items[i]["attn"]) for i in cand], dtype=object),
-                                adj=np.array([items[i]["adj"] for i in cand], dtype=object),
-                                dist=np.array([items[i]["dist"] for i in cand], dtype=object),
+                                self_attn=obj_array([np.stack(items[i]["self_attn"]) for i in cand]),
+                                attn=obj_array([np.stack(items[i]["attn"]) for i in cand]),
+                                adj=obj_array([items[i]["adj"] for i in cand]),
+                                dist=obj_array([items[i]["dist"] for i in cand]),
                                 pred=np.array([res["test_pred"][i] for i in cand]),
                                 true=np.array([res["test_true"][i] for i in cand]))
             print(stats.groupby("kind")[["bonded_share", "self_share", "dummy_share", "dist_corr_spearman", "entropy"]].mean())

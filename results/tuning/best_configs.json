@@ -1,0 +1,426 @@
+{
+  "rf": {
+    "bbbp": {
+      "random": {
+        "class_weight": "balanced",
+        "max_features": "sqrt",
+        "min_samples_leaf": 1,
+        "n_estimators": 500
+      },
+      "scaffold": {
+        "class_weight": "balanced",
+        "max_features": "sqrt",
+        "min_samples_leaf": 1,
+        "n_estimators": 500
+      }
+    },
+    "esol": {
+      "random": {
+        "max_features": 0.3,
+        "min_samples_leaf": 1,
+        "n_estimators": 500
+      },
+      "scaffold": {
+        "max_features": 0.3,
+        "min_samples_leaf": 1,
+        "n_estimators": 500
+      }
+    },
+    "freesolv": {
+      "random": {
+        "max_features": 0.3,
+        "min_samples_leaf": 3,
+        "n_estimators": 500
+      },
+      "scaffold": {
+        "max_features": 0.3,
+        "min_samples_leaf": 1,
+        "n_estimators": 500
+      }
+    },
+    "estrogen-alpha": {
+      "random": {
+        "class_weight": null,
+        "max_features": "sqrt",
+        "min_samples_leaf": 3,
+        "n_estimators": 500
+      },
+      "scaffold": {
+        "class_weight": null,
+        "max_features": "sqrt",
+        "min_samples_leaf": 3,
+        "n_estimators": 500
+      }
+    },
+    "estrogen-beta": {
+      "random": {
+        "class_weight": "balanced",
+        "max_features": 0.3,
+        "min_samples_leaf": 1,
+        "n_estimators": 500
+      },
+      "scaffold": {
+        "class_weight": "balanced",
+        "max_features": "sqrt",
+        "min_samples_leaf": 1,
+        "n_estimators": 500
+      }
+    },
+    "metstab-high": {
+      "random": {
+        "class_weight": null,
+        "max_features": "sqrt",
+        "min_samples_leaf": 1,
+        "n_estimators": 500
+      },
+      "scaffold": {
+        "class_weight": "balanced",
+        "max_features": 0.3,
+        "min_samples_leaf": 3,
+        "n_estimators": 500
+      }
+    },
+    "metstab-low": {
+      "random": {
+        "class_weight": null,
+        "max_features": 0.3,
+        "min_samples_leaf": 3,
+        "n_estimators": 500
+      },
+      "scaffold": {
+        "class_weight": null,
+        "max_features": 0.3,
+        "min_samples_leaf": 3,
+        "n_estimators": 500
+      }
+    }
+  },
+  "svm": {
+    "bbbp": {
+      "random": {
+        "C": 10.0,
+        "class_weight": "balanced"
+      },
+      "scaffold": {
+        "C": 1.0,
+        "class_weight": "balanced"
+      }
+    },
+    "esol": {
+      "random": {
+        "C": 10.0,
+        "epsilon": 0.05
+      },
+      "scaffold": {
+        "C": 10.0,
+        "epsilon": 0.05
+      }
+    },
+    "freesolv": {
+      "random": {
+        "C": 10.0,
+        "epsilon": 0.05
+      },
+      "scaffold": {
+        "C": 10.0,
+        "epsilon": 0.05
+      }
+    },
+    "estrogen-alpha": {
+      "random": {
+        "C": 1.0,
+        "class_weight": null
+      },
+      "scaffold": {
+        "C": 1.0,
+        "class_weight": "balanced"
+      }
+    },
+    "estrogen-beta": {
+      "random": {
+        "C": 1.0,
+        "class_weight": "balanced"
+      },
+      "scaffold": {
+        "C": 1.0,
+        "class_weight": "balanced"
+      }
+    },
+    "metstab-high": {
+      "random": {
+        "C": 1.0,
+        "class_weight": "balanced"
+      },
+      "scaffold": {
+        "C": 1.0,
+        "class_weight": "balanced"
+      }
+    },
+    "metstab-low": {
+      "random": {
+        "C": 10.0,
+        "class_weight": "balanced"
+      },
+      "scaffold": {
+        "C": 1.0,
+        "class_weight": null
+      }
+    }
+  },
+  "gcn": {
+    "bbbp": {
+      "random": {
+        "batch_size": 64,
+        "dropout": 0.1,
+        "hidden": 128,
+        "lr": 0.001,
+        "n_layers": 2
+      },
+      "scaffold": {
+        "batch_size": 64,
+        "dropout": 0.1,
+        "hidden": 64,
+        "lr": 0.001,
+        "n_layers": 3
+      }
+    },
+    "esol": {
+      "random": {
+        "batch_size": 64,
+        "dropout": 0.1,
+        "hidden": 64,
+        "lr": 0.001,
+        "n_layers": 3
+      },
+      "scaffold": {
+        "batch_size": 64,
+        "dropout": 0.1,
+        "hidden": 128,
+        "lr": 0.001,
+        "n_layers": 3
+      }
+    },
+    "freesolv": {
+      "random": {
+        "batch_size": 64,
+        "dropout": 0.1,
+        "hidden": 128,
+        "lr": 0.001,
+        "n_layers": 3
+      },
+      "scaffold": {
+        "batch_size": 64,
+        "dropout": 0.1,
+        "hidden": 128,
+        "lr": 0.001,
+        "n_layers": 2
+      }
+    },
+    "estrogen-alpha": {
+      "random": {
+        "batch_size": 64,
+        "dropout": 0.1,
+        "hidden": 64,
+        "lr": 0.001,
+        "n_layers": 3
+      },
+      "scaffold": {
+        "batch_size": 64,
+        "dropout": 0.1,
+        "hidden": 128,
+        "lr": 0.001,
+        "n_layers": 2
+      }
+    },
+    "estrogen-beta": {
+      "random": {
+        "batch_size": 64,
+        "dropout": 0.1,
+        "hidden": 128,
+        "lr": 0.001,
+        "n_layers": 3
+      },
+      "scaffold": {
+        "batch_size": 64,
+        "dropout": 0.1,
+        "hidden": 128,
+        "lr": 0.001,
+        "n_layers": 3
+      }
+    },
+    "metstab-high": {
+      "random": {
+        "batch_size": 64,
+        "dropout": 0.1,
+        "hidden": 128,
+        "lr": 0.001,
+        "n_layers": 3
+      },
+      "scaffold": {
+        "batch_size": 64,
+        "dropout": 0.1,
+        "hidden": 64,
+        "lr": 0.001,
+        "n_layers": 3
+      }
+    },
+    "metstab-low": {
+      "random": {
+        "batch_size": 64,
+        "dropout": 0.1,
+        "hidden": 128,
+        "lr": 0.001,
+        "n_layers": 2
+      },
+      "scaffold": {
+        "batch_size": 64,
+        "dropout": 0.1,
+        "hidden": 128,
+        "lr": 0.001,
+        "n_layers": 2
+      }
+    }
+  },
+  "mat": {
+    "bbbp": {
+      "random": {
+        "N": 4,
+        "batch_size": 64,
+        "d_model": 64,
+        "distance_matrix_kernel": "softmax",
+        "dropout": 0.1,
+        "h": 4,
+        "lr": 0.001
+      },
+      "scaffold": {
+        "N": 2,
+        "batch_size": 64,
+        "d_model": 128,
+        "distance_matrix_kernel": "softmax",
+        "dropout": 0.1,
+        "h": 4,
+        "lr": 0.0005
+      }
+    },
+    "esol": {
+      "random": {
+        "N": 4,
+        "batch_size": 64,
+        "d_model": 64,
+        "distance_matrix_kernel": "softmax",
+        "dropout": 0.1,
+        "h": 4,
+        "lr": 0.001
+      },
+      "scaffold": {
+        "N": 2,
+        "batch_size": 64,
+        "d_model": 128,
+        "distance_matrix_kernel": "softmax",
+        "dropout": 0.1,
+        "h": 4,
+        "lr": 0.001
+      }
+    },
+    "freesolv": {
+      "random": {
+        "N": 4,
+        "batch_size": 64,
+        "d_model": 64,
+        "distance_matrix_kernel": "softmax",
+        "dropout": 0.1,
+        "h": 4,
+        "lr": 0.0005
+      },
+      "scaffold": {
+        "N": 2,
+        "batch_size": 64,
+        "d_model": 128,
+        "distance_matrix_kernel": "softmax",
+        "dropout": 0.1,
+        "h": 4,
+        "lr": 0.001
+      }
+    },
+    "estrogen-alpha": {
+      "random": {
+        "N": 2,
+        "batch_size": 64,
+        "d_model": 128,
+        "distance_matrix_kernel": "softmax",
+        "dropout": 0.1,
+        "h": 4,
+        "lr": 0.0005
+      },
+      "scaffold": {
+        "N": 2,
+        "batch_size": 64,
+        "d_model": 128,
+        "distance_matrix_kernel": "softmax",
+        "dropout": 0.1,
+        "h": 4,
+        "lr": 0.001
+      }
+    },
+    "estrogen-beta": {
+      "random": {
+        "N": 4,
+        "batch_size": 64,
+        "d_model": 64,
+        "distance_matrix_kernel": "softmax",
+        "dropout": 0.1,
+        "h": 4,
+        "lr": 0.001
+      },
+      "scaffold": {
+        "N": 4,
+        "batch_size": 64,
+        "d_model": 64,
+        "distance_matrix_kernel": "softmax",
+        "dropout": 0.1,
+        "h": 4,
+        "lr": 0.0005
+      }
+    },
+    "metstab-high": {
+      "random": {
+        "N": 2,
+        "batch_size": 64,
+        "d_model": 128,
+        "distance_matrix_kernel": "softmax",
+        "dropout": 0.1,
+        "h": 4,
+        "lr": 0.0005
+      },
+      "scaffold": {
+        "N": 2,
+        "batch_size": 64,
+        "d_model": 64,
+        "distance_matrix_kernel": "softmax",
+        "dropout": 0.1,
+        "h": 4,
+        "lr": 0.0005
+      }
+    },
+    "metstab-low": {
+      "random": {
+        "N": 4,
+        "batch_size": 64,
+        "d_model": 64,
+        "distance_matrix_kernel": "softmax",
+        "dropout": 0.1,
+        "h": 4,
+        "lr": 0.0005
+      },
+      "scaffold": {
+        "N": 2,
+        "batch_size": 64,
+        "d_model": 128,
+        "distance_matrix_kernel": "softmax",
+        "dropout": 0.1,
+        "h": 4,
+        "lr": 0.0005
+      }
+    }
+  }
+}

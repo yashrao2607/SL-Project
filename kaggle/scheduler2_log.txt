@@ -1,0 +1,47 @@
+03:47:19 start; already pushed: []
+03:47:23 status {"slproj-b": "NOT_PUSHED", "slproj-c": "NOT_PUSHED"} active=0
+03:49:27 status {"slproj-b": "NOT_PUSHED", "slproj-c": "NOT_PUSHED"} active=0
+03:51:33 status {"slproj-b": "NOT_PUSHED", "slproj-c": "NOT_PUSHED"} active=0
+03:53:31 start; already pushed: []
+03:53:41 status {"slproj-b": "NOT_PUSHED", "slproj-c": "NOT_PUSHED"} active=0
+03:53:41 local tuning complete -> bash kaggle/stage_dataset2.sh 'full local tuning table'
+03:54:14 stage exit 127: kaggle/stage_dataset2.sh: line 8: python: command not found
+03:56:26 status {"slproj-b": "NOT_PUSHED", "slproj-c": "NOT_PUSHED"} active=0
+03:56:26 local tuning complete -> bash kaggle/stage_dataset2.sh 'full local tuning table'
+03:56:39 stage exit 127: kaggle/stage_dataset2.sh: line 8: python: command not found
+03:58:50 status {"slproj-b": "NOT_PUSHED", "slproj-c": "NOT_PUSHED"} active=0
+03:58:50 local tuning complete -> bash kaggle/stage_dataset2.sh 'full local tuning table'
+03:59:04 stage exit 127: kaggle/stage_dataset2.sh: line 8: python: command not found
+04:01:14 status {"slproj-b": "NOT_PUSHED", "slproj-c": "NOT_PUSHED"} active=0
+04:01:14 local tuning complete -> bash kaggle/stage_dataset2.sh 'full local tuning table'
+04:01:16 stage exit 1: sed: C:/Users/yashr/.kaggle2/kaggle.json: No such file or directory
+04:01:47 start; already running/complete: []
+04:01:57 status {"slproj-b": "NOT_PUSHED", "slproj-c": "NOT_PUSHED"} active=0
+04:01:57 local tuning complete -> bash kaggle/stage_dataset2.sh 'full local tuning table'
+04:04:01 scheduler crashed: TypeError: can only concatenate str (not "NoneType") to str
+04:08:47 assume-staged: dataset version with tuning table visible: True
+04:08:56 start; already running/complete: []
+04:09:06 status {"slproj-b": "NOT_PUSHED", "slproj-c": "NOT_PUSHED"} active=0
+04:09:12 push slproj-b: exit 0: Kernel version 1 successfully pushed.  Please check progress at https://www.kaggle.com/code/dipuraooooo/slproj-b
+04:11:21 status {"slproj-b": "ERROR", "slproj-c": "NOT_PUSHED"} active=0
+04:11:28 push slproj-c: exit 0: Kernel version 1 successfully pushed.  Please check progress at https://www.kaggle.com/code/dipuraooooo/slproj-c
+04:11:34 fetched slproj-b (ERROR): exit 0; files: ['progress.txt', 'slproj-b.log']
+04:11:34 slproj-b progress tail: 22:39:32 notebook started
+04:11:34 slproj-b ERROR details: no error.txt
+04:12:47 assume-staged: dataset version with tuning table visible: True
+04:12:57 start; already running/complete: []
+04:13:06 status {"slproj-b": "ERROR", "slproj-c": "ERROR"} active=0
+04:13:12 push slproj-b: exit 0: Kernel version 2 successfully pushed.  Please check progress at https://www.kaggle.com/code/dipuraooooo/slproj-b
+04:13:17 fetched slproj-b (ERROR): exit 0; files: ['progress.txt', 'slproj-b.log']
+04:13:17 slproj-b progress tail: 22:39:32 notebook started
+04:13:17 slproj-b ERROR details: no error.txt
+04:15:27 status {"slproj-b": "RUNNING", "slproj-c": "ERROR"} active=1
+04:15:33 push slproj-b: exit 0: Kernel version 3 successfully pushed.  Please check progress at https://www.kaggle.com/code/dipuraooooo/slproj-b
+04:17:42 status {"slproj-b": "RUNNING", "slproj-c": "ERROR"} active=1
+04:17:48 push slproj-c: exit 0: Kernel version 2 successfully pushed.  Please check progress at https://www.kaggle.com/code/dipuraooooo/slproj-c
+04:17:54 fetched slproj-c (ERROR): exit 0; files: []
+04:17:54 slproj-c ERROR details: no error.txt
+04:20:03 status {"slproj-b": "ERROR", "slproj-c": "RUNNING"} active=1
+04:20:09 push slproj-c: exit 0: Kernel version 3 successfully pushed.  Please check progress at https://www.kaggle.com/code/dipuraooooo/slproj-c
+04:22:19 status {"slproj-b": "ERROR", "slproj-c": "RUNNING"} active=1
+04:24:29 status {"slproj-b": "ERROR", "slproj-c": "ERROR"} active=0

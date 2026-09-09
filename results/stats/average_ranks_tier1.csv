@@ -1,0 +1,17 @@
+split,model,avg_rank,n_tasks
+random,svm,2.857142857142857,7
+random,hybrid,3.4285714285714284,7
+random,gcn,3.7142857142857144,7
+random,rf,3.7142857142857144,7
+random,mat,4.142857142857143,7
+random,mat_nodistance,5.142857142857143,7
+random,mat_nograph,5.857142857142857,7
+random,mat_noattention,7.142857142857143,7
+scaffold,svm,3.0,7
+scaffold,rf,3.4285714285714284,7
+scaffold,hybrid,3.7142857142857144,7
+scaffold,gcn,4.0,7
+scaffold,mat_nodistance,4.142857142857143,7
+scaffold,mat,4.571428571428571,7
+scaffold,mat_nograph,6.142857142857143,7
+scaffold,mat_noattention,7.0,7
